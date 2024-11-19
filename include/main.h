@@ -54,7 +54,10 @@
 // using namespace okapi;
 
 #include "globals.h"
-#include "components/drive.h"
+#include "pros/apix.h"
+#include "logo.c"
+
+LV_IMG_DECLARE(logo);
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure

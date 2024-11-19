@@ -1,8 +1,8 @@
 /**
  * \file globals.h
  *
- * Updated - 1/10/2024
- * Last Successful Test - 1/10/2024
+ * Updated - 11/17/2024
+ * Last Successful Test - 11/17/2024
  */
 
 #ifndef __GLOBALS
@@ -26,18 +26,6 @@ namespace nova {
     extern pros::v5::MotorGroup leftDrive;
     extern pros::v5::MotorGroup rightDrive;
     extern pros::v5::MotorGroup drive;
-
-    //extern pros::v5::Motor intake;
-    //extern pros::v5::Motor flywheel;
-
-    //extern pros::v5::Rotation a;
-    
-    //extern pros::v5::Imu IMU1;
-    //extern pros::Imu IMU2;
-
-    //extern pros::adi::Potentiometer potentiometer;
-    //extern pros::adi::DigitalOut frontWings;
-    //extern pros::adi::AnalogOut backWings;
 }
 
 #endif
