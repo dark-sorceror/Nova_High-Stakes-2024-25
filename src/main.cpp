@@ -7,15 +7,11 @@
 
 #include "main.h"
 
+Nova::Brain brain = Nova::Brain();
+
 void initialize()
 {
-    lv_obj_t * img = lv_img_create(lv_scr_act());
-
-    lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0), LV_PART_MAIN);
-
-    lv_img_set_src(img, &logo);
-
-    lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
+    brain.initialize();
 }
 
 void disabled() {}

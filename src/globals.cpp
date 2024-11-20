@@ -8,9 +8,10 @@
 #include "api.h"
 #include "globals.h"
 
-namespace nova {
+namespace Nova {
     const std::string TEAM_NAME = "Nova";
     const std::string TEAM_NUMBER = "3388N";
+    const char * VERSION = "v1.0.0";
 
     pros::Controller ctr (pros::E_CONTROLLER_MASTER);
 

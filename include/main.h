@@ -36,6 +36,8 @@
 
 #include "api.h"
 
+#include "stdio.h"
+
 /**
  * You should add more #includes here
  */
@@ -56,8 +58,13 @@
 #include "globals.h"
 #include "pros/apix.h"
 #include "logo.c"
+#include "logo_2.c"
+#include "field.c"
+#include "brain.h"
 
 LV_IMG_DECLARE(logo);
+LV_IMG_DECLARE(logo_2);
+LV_IMG_DECLARE(field);
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure

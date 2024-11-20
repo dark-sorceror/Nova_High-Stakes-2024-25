@@ -10,9 +10,10 @@
 
 #include "api.h"
 
-namespace nova {
+namespace Nova {
     extern const std::string TEAM_NAME;
     extern const std::string TEAM_NUMBER;
+    extern const char * VERSION;
 
     extern pros::v5::Controller ctr;
 
