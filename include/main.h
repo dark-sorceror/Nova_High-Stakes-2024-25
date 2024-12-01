@@ -57,10 +57,21 @@
 
 #include "globals.h"
 #include "pros/apix.h"
-#include "logo.c"
-#include "logo_2.c"
-#include "field.c"
+#include "../renders/logo.c"
+#include "../renders/logo_2.c"
+#include "../renders/field.c"
+
+#include "chassis/odom.h"
 #include "brain.h"
+#include "chassis/drive.h"
+
+#include "subsystems/intake.h"
+#include "subsystems/clamp.h"
+
+#include "colorsort.h"
+#include "auton.h"
+
+#include "pid.h"
 
 LV_IMG_DECLARE(logo);
 LV_IMG_DECLARE(logo_2);

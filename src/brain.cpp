@@ -120,53 +120,61 @@ static void btn_event_handler(lv_event_t * e)
 
     switch (btn_type)
     {
-    case BTN_MATCH:
-        match_screen();
-        lv_scr_load(s_match_screen);
+        case BTN_MATCH:
+            match_screen();
+            lv_scr_load(s_match_screen);
 
-        break;
+            break;
 
-    case BTN_BACK:
-        home_screen();
-        lv_scr_load(s_home_screen);
+        case BTN_BACK:
+            home_screen();
+            lv_scr_load(s_home_screen);
 
-        break;
+            break;
 
-    case BTN_TESTING:
-        printf("Testing button pressed\n");
+        case BTN_TESTING:
+            break;
 
-        break;
+        case BTN_DEFAULT:
+            logo_screen();
+            lv_scr_load(s_logo_screen);
 
-    case BTN_DEFAULT:
-        logo_screen();
-        lv_scr_load(s_logo_screen);
+            break;
 
-        break;
+        case BTN_BLUE_1:
+            //run auton
 
-    case BTN_BLUE_1:
-        printf("Blue far side button pressed\n");
+            logo_screen();
+            lv_scr_load(s_logo_screen);
 
-        break;
+            break;
 
-    case BTN_BLUE_2:
-        printf("Blue close side button pressed\n");
+        case BTN_BLUE_2:
+            //run auton
 
-        break;
+            logo_screen();
+            lv_scr_load(s_logo_screen);
+            
+            break;
 
-    case BTN_RED_1:
-        printf("Red far side button pressed\n");
+        case BTN_RED_1:
+            //run auton
 
-        break;
+            logo_screen();
+            lv_scr_load(s_logo_screen);
+            
+            break;
 
-    case BTN_RED_2:
-        printf("Red close side button pressed\n");
+        case BTN_RED_2:
+            //run auton
 
-        break;
+            logo_screen();
+            lv_scr_load(s_logo_screen);
+            
+            break;
 
-    default:
-        printf("Unknown button pressed\n");
-
-        break;
+        default:
+            break;
     }
 }
 
