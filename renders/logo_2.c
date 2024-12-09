@@ -840,8 +840,8 @@ const lv_img_dsc_t logo_2 = {
         .cf = LV_IMG_CF_TRUE_COLOR_ALPHA,
         .always_zero = 0,
         .reserved = 0,
-        .w = 200,
-        .h = 200
+        .w = 175,
+        .h = 175
     },
     .data_size = 115200 * LV_IMG_PX_SIZE_ALPHA_BYTE,
     .data = logo_2_map

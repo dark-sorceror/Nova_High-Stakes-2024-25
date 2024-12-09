@@ -184,11 +184,11 @@ static void home_screen(void)
 
     lv_obj_set_style_bg_color(s_home_screen, lv_color_hex(0), LV_PART_MAIN);
 
-    image(s_home_screen, &logo_2, LV_ALIGN_LEFT_MID, {25, 0});
+    image(s_home_screen, &logo_2, LV_ALIGN_LEFT_MID, {30, 0});
 
-    button(s_home_screen, 170, 40, 2, lv_color_hex(0xFFFFFF), lv_color_hex(0), LV_ALIGN_RIGHT_MID, {-25, -60}, "Match", lv_color_hex(0xFFFFFFF), BTN_MATCH);
-    button(s_home_screen, 170, 40, 2, lv_color_hex(0xFFFFFF), lv_color_hex(0), LV_ALIGN_RIGHT_MID, {-25, 0}, "Testing", lv_color_hex(0xFFFFFFF), BTN_TESTING);
-    button(s_home_screen, 170, 40, 2, lv_color_hex(0xFFFFFF), lv_color_hex(0), LV_ALIGN_RIGHT_MID, {-25, 60}, "Default", lv_color_hex(0xFFFFFFF), BTN_DEFAULT);
+    button(s_home_screen, 170, 32, 2, lv_color_hex(0xFFFFFF), lv_color_hex(0), LV_ALIGN_RIGHT_MID, {-32, -60}, "Match", lv_color_hex(0xFFFFFFF), BTN_MATCH);
+    button(s_home_screen, 170, 32, 2, lv_color_hex(0xFFFFFF), lv_color_hex(0), LV_ALIGN_RIGHT_MID, {-32, 0}, "Testing", lv_color_hex(0xFFFFFFF), BTN_TESTING);
+    button(s_home_screen, 170, 32, 2, lv_color_hex(0xFFFFFF), lv_color_hex(0), LV_ALIGN_RIGHT_MID, {-32, 60}, "Default", lv_color_hex(0xFFFFFFF), BTN_DEFAULT);
 
     version(s_home_screen);
 }

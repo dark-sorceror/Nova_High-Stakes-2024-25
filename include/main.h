@@ -61,17 +61,13 @@
 #include "../renders/logo_2.c"
 #include "../renders/field.c"
 
-#include "chassis/odom.h"
 #include "brain.h"
 #include "chassis/drive.h"
 
 #include "subsystems/intake.h"
 #include "subsystems/clamp.h"
-
-#include "colorsort.h"
-#include "auton.h"
-
-#include "pid.h"
+#include "pose.hpp"
+#include "chassis/odom.h"
 
 LV_IMG_DECLARE(logo);
 LV_IMG_DECLARE(logo_2);

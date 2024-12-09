@@ -51,7 +51,7 @@ void Nova::Drive::run() {
 }
 
 double Nova::Drive::smooth(double input) {
-    const int CURVECONSTANT = 0.25;
+    const int CURVECONSTANT = 10;
 
     return  (std::pow(2.718, -(CURVECONSTANT / 10)) + std::pow(2.718, (std::abs(input) - 127) / 10) * (1 - std::pow(2.718, -(CURVECONSTANT / 10)))) * input;
 }

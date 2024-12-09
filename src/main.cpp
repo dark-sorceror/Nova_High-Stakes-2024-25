@@ -3,7 +3,7 @@
  *
  * Updated - 11/30/2024
  * Last Successful Test - 11/30/2024
- */ 
+ */
 
 #include "main.h"
 
@@ -11,13 +11,14 @@ Nova::Brain brain = Nova::Brain();
 Nova::Drive drive = Nova::Drive();
 Nova::Intake intake = Nova::Intake();
 Nova::Clamp clamp = Nova::Clamp();
-Nova::Auton auton = Nova::Auton(drive, intake);
 
 void initialize()
 {
-    brain.initialize();
+    // brain.initialize();
 
-    //change later
+    // change later
+
+    pros::lcd::initialize();
 
     Nova::frontLeft.tare_position();
     Nova::middleLeft.tare_position();
@@ -36,7 +37,7 @@ void competition_initialize()
 {
     brain.initialize();
 
-    //change later
+    // change later
 
     Nova::frontLeft.tare_position();
     Nova::middleLeft.tare_position();
@@ -53,16 +54,18 @@ void competition_initialize()
 
 void autonomous()
 {
-    auton.test();
-    //Nova::moveToPos(10.0, 10.0, M_PI / 2.0); // 10 cm, 10 cm, 90 degrees
+    // Nova::moveToPos(10.0, 10.0, M_PI / 2.0); // 10 cm, 10 cm, 90 degrees
 }
 
 void opcontrol()
 {
+    Nova::imu1.reset();
+    Nova::imu2.reset();
+
+    pros::delay(3000);
     while (true)
     {
-        intake.run();
-        clamp.run();
+        Nova::update();
         drive.run();
         pros::delay(10);
     }
