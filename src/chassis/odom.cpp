@@ -1,5 +1,14 @@
+/**
+ * \file odom.cpp
+ *
+ * \brief Contains odom (tracking algorithm) logic
+ * 
+ * Updated - 11/30/2024
+ * Last Successful Test - 11/30/2024
+ */
+
 #include <math.h>
-#include "pros/rtos.hpp"
+
 #include "main.h"
 
 Nova::Pose odomPose(0, 0, 0);

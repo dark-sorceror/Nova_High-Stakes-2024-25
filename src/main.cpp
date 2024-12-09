@@ -1,6 +1,8 @@
 /**
  * \file main.cpp
  *
+ * \brief Main file
+ * 
  * Updated - 11/30/2024
  * Last Successful Test - 11/30/2024
  */
@@ -12,61 +14,32 @@ Nova::Drive drive = Nova::Drive();
 Nova::Intake intake = Nova::Intake();
 Nova::Clamp clamp = Nova::Clamp();
 
-void initialize()
-{
-    // brain.initialize();
-
-    // change later
-
+void initialize() {
     pros::lcd::initialize();
 
-    Nova::frontLeft.tare_position();
-    Nova::middleLeft.tare_position();
-    Nova::backLeft.tare_position();
-    Nova::frontRight.tare_position();
-    Nova::middleRight.tare_position();
-    Nova::backRight.tare_position();
-
-    Nova::imu1.reset();
-    Nova::imu2.reset();
+    drive.initialize();
 }
 
 void disabled() {}
 
-void competition_initialize()
-{
+void competition_initialize() {
     brain.initialize();
 
-    // change later
-
-    Nova::frontLeft.tare_position();
-    Nova::middleLeft.tare_position();
-    Nova::backLeft.tare_position();
-    Nova::frontRight.tare_position();
-    Nova::middleRight.tare_position();
-    Nova::backRight.tare_position();
-
-    Nova::imu1.reset();
-    Nova::imu2.reset();
+    drive.initialize();
 
     autonomous();
 }
 
-void autonomous()
-{
+void autonomous() {
     // Nova::moveToPos(10.0, 10.0, M_PI / 2.0); // 10 cm, 10 cm, 90 degrees
 }
 
-void opcontrol()
-{
-    Nova::imu1.reset();
-    Nova::imu2.reset();
+void opcontrol() {
+    while (true) {
+        Nova::update(); // tracking algorithm loop
 
-    pros::delay(3000);
-    while (true)
-    {
-        Nova::update();
         drive.run();
+
         pros::delay(10);
     }
 }

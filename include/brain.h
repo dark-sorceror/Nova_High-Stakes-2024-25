@@ -1,23 +1,23 @@
 /**
  * \file brain.h
  *
- * Updated - 11/19/2024
- * Last Successful Test - 11/19/2024
+ * \brief Contains brain definitions for brain.cpp
+ * 
+ * Updated - 11/30/2024
+ * Last Successful Test - 11/30/2024
  */
 
-#ifndef BRAIN_H
-#define BRAIN_H
+#ifndef _BRAIN_H_
+#define _BRAIN_H_
 
 #include "main.h"
 
-namespace Nova
-{
-    class Brain
-    {
+namespace Nova {
+    class Brain {
         public:
             void initialize(void);
     };
 
-} // namespace Nova
+}; // namespace Nova
 
-#endif // BRAIN_H
+#endif // _BRAIN_H_

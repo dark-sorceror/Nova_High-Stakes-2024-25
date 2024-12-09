@@ -1,8 +1,10 @@
 /**
  * \file brain.cpp
  *
- * Updated - 11/19/2024
- * Last Successful Test - 11/19/2024
+ * \brief Contains lvgl implementation for auton planner logic on brain
+ * 
+ * Updated - 11/30/2024
+ * Last Successful Test - 11/30/2024
  */
 
 #include "main.h"
@@ -17,14 +19,12 @@ lv_obj_t * s_logo_screen;
 lv_obj_t * s_home_screen;
 lv_obj_t * s_match_screen;
 
-typedef struct
-{
+typedef struct {
     int x;
     int y;
 } Coordinates;
 
-typedef enum
-{
+typedef enum {
     BTN_MATCH,
     BTN_BACK,
     BTN_TESTING,
@@ -42,8 +42,7 @@ static void back_btn(
     Coordinates offset,
     lv_color_t
     label_color
-)
-{
+) {
     lv_obj_t * back_btn = lv_btn_create(screen);
     lv_obj_t * back_text = lv_label_create(back_btn);
 
@@ -56,8 +55,7 @@ static void back_btn(
     lv_obj_set_style_text_color(back_text, label_color, LV_PART_MAIN);
 }
 
-static void version(lv_obj_t * screen)
-{
+static void version(lv_obj_t * screen) {
     lv_obj_t * text = lv_label_create(screen);
     lv_label_set_text(text, Nova::VERSION);
     lv_obj_align(text, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
@@ -75,8 +73,7 @@ static void button(
     const char * label,
     lv_color_t label_color,
     ButtonType btn_id
-)
-{
+) {
     lv_obj_t * btn = lv_btn_create(screen);
 
     lv_obj_set_width(btn, width);
@@ -89,8 +86,7 @@ static void button(
     lv_obj_add_event_cb(btn, btn_event_handler, LV_EVENT_CLICKED, NULL);
     lv_obj_set_user_data(btn, (lv_obj_user_data_t)(intptr_t)btn_id);
 
-    if (label)
-    {
+    if (label) {
         lv_obj_t * label_match = lv_label_create(btn);
         lv_label_set_text(label_match, label);
         lv_obj_align(label_match, LV_ALIGN_CENTER, 0, 0);
@@ -102,8 +98,7 @@ static void image(
     const lv_img_dsc_t * ptr_img,
     lv_align_t align,
     Coordinates offset
-)
-{
+) {
     lv_obj_t * img = lv_img_create(screen);
 
     lv_img_set_src(img, ptr_img);
@@ -112,14 +107,12 @@ static void image(
 }
 
 
-static void btn_event_handler(lv_event_t * e)
-{
+static void btn_event_handler(lv_event_t * e) {
     lv_obj_t * btn = lv_event_get_target(e);
 
     ButtonType btn_type = (ButtonType)(intptr_t)lv_obj_get_user_data(btn); 
 
-    switch (btn_type)
-    {
+    switch (btn_type) {
         case BTN_MATCH:
             match_screen();
             lv_scr_load(s_match_screen);
@@ -178,8 +171,7 @@ static void btn_event_handler(lv_event_t * e)
     }
 }
 
-static void home_screen(void)
-{
+static void home_screen(void) {
     s_home_screen = lv_obj_create(NULL);
 
     lv_obj_set_style_bg_color(s_home_screen, lv_color_hex(0), LV_PART_MAIN);
@@ -193,8 +185,7 @@ static void home_screen(void)
     version(s_home_screen);
 }
 
-static void logo_screen(void)
-{
+static void logo_screen(void) {
     s_logo_screen = lv_obj_create(NULL);
 
     image(s_logo_screen, &logo, LV_ALIGN_CENTER, {0, 0});
@@ -202,8 +193,7 @@ static void logo_screen(void)
     back_btn(s_logo_screen, LV_ALIGN_TOP_LEFT, {0, 0}, lv_color_hex(0));
 }
 
-static void match_screen(void)
-{
+static void match_screen(void) {
     s_match_screen = lv_obj_create(NULL);
 
     lv_obj_set_style_bg_color(s_match_screen, lv_color_hex(0), LV_PART_MAIN);
@@ -263,8 +253,7 @@ static void match_screen(void)
     button(s_match_screen, 95, 60, 2, lv_color_hex(0xEE4B2B), lv_color_hex(0), LV_ALIGN_BOTTOM_LEFT, {25, -25}, NULL, lv_color_hex(0xFFFFFFF), BTN_RED_2);
 }
 
-void Nova::Brain::initialize(void)
-{
+void Nova::Brain::initialize(void) {
     lv_init();
 
     home_screen();

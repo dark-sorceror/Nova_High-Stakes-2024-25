@@ -1,16 +1,17 @@
 /**
  * \file clamp.cpp
  *
+ * \brief Contains clamp logic
+ * 
  * Updated - 11/30/2024
  * Last Successful Test - 11/30/2024
- */ 
+ */
 
 #include "main.h"
 
 bool clampToggle = false;
 
-void Nova::Clamp::run()
-{
+void Nova::Clamp::run() {
      if (ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)) {
     	clampToggle = !clampToggle;
         
