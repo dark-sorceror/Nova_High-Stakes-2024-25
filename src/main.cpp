@@ -58,10 +58,14 @@ void autonomous() {
  * 
  */
 void opcontrol() {
+    intake.colorSort();
+
     while (true) {
         Nova::update(); // tracking algorithm loop
 
         drive.run();
+        intake.run();
+        clamp.run();
 
         pros::delay(10);
     }

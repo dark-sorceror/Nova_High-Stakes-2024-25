@@ -33,8 +33,6 @@ namespace Nova {
     extern pros::v5::MotorGroup drive;
 
     // Subsystems
-    extern pros::v5::Motor conveyor;
-
     extern pros::v5::Motor intake;
 
     extern pros::adi::Pneumatics clamp;

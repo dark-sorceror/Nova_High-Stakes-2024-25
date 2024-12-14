@@ -14,7 +14,9 @@ namespace Nova {
             void initialize();
             void spinRevolutions(int revolutions);
             void run();
+            void colorSort();
         private:
+            void outTakeTask();
             bool intakeActive = false;
     };
 }
