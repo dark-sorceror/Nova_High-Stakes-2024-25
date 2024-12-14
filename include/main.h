@@ -23,18 +23,17 @@
 #include "api.h"
 
 // libNova
-#include "brain.h"
+#include "Subsystems/brain.h"
 
 #include "globals.h"
 
 #include "pose.h"
 
-#include "chassis/drive.h"
-#include "chassis/odom.h"
+#include "Subsystems/Chassis/chassis.h"
+#include "Subsystems/Chassis/odom.h"
 
-#include "subsystems/intake.h"
-#include "subsystems/clamp.h"
-
+#include "Subsystems/intake.h"
+#include "Subsystems/clamp.h"
 
 #include "../renders/logo.c"
 #include "../renders/logo_2.c"
@@ -57,6 +56,9 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
+#include <iostream>
+#include <vector>
+#include <numeric>
 #endif
 
 #endif  // _PROS_MAIN_H_

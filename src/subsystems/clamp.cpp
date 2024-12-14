@@ -2,7 +2,7 @@
  * \file clamp.cpp
  *
  * \brief Contains clamp logic
- * 
+ *
  * Updated - 11/30/2024
  * Last Successful Test - 11/30/2024
  */
@@ -11,10 +11,14 @@
 
 bool clampToggle = false;
 
+/**
+ * @brief Run clamp
+ *
+ */
 void Nova::Clamp::run() {
-     if (ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)) {
-    	clampToggle = !clampToggle;
-        
-		clamp.set_value(clampToggle);
+    if (ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)) {
+        clampToggle = !clampToggle;
+
+        clamp.set_value(clampToggle);
     }
 }
