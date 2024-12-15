@@ -1,12 +1,12 @@
 /**
  * \file PID.hpp
  *
- * Updated - 1/10/2024
- * Last Successful Test - 1/10/2024
+ * Updated - 12/15/2024
+ * Last Successful Test - 12/15/2024
  */ 
 
-#ifndef __PID
-#define __PID
+#ifndef _PID_H_
+#define _PID_H_
 
 namespace Nova {
     class PID {
@@ -72,6 +72,6 @@ namespace Nova {
                 float timeout
             );
     };
-}
+} // namespace Nova
 
-#endif
+#endif // _PID_H_

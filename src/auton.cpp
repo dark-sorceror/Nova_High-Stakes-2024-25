@@ -1,15 +1,16 @@
 /**
  * \file auton.cpp
  *
- * Updated - 1/13/2024
- * Last Successful Test - 1/10/2024
+ * Updated - 12/15/2024
+ * Last Successful Test - 12/15/2024
  */ 
 
-#include "subsystems/Chassis/chassis.h"
-#include "subsystems/intake.h"
-#include "subsystems/clamp.h"
 #include "auton.h"
 #include "globals.h"
+
+#include "Subsystems/Chassis/chassis.h"
+#include "Subsystems/intake.h"
+#include "Subsystems/clamp.h"
 
 /*
 1800 ticks/rev with 36:1 gears red
@@ -20,12 +21,28 @@
 omni wheel circumference =  2pi 3.25 inch = 20.42 inches / rev
 */
 
-Nova::Auton::Auton(Nova::Chassis chassis, Nova::Intake intake, Nova::Clamp clamp):
+/**
+ * @brief Construct a new Nova::Auton::Auton object
+ * 
+ * @param chassis 
+ * @param intake 
+ * @param clamp 
+ */
+Nova::Auton::Auton(
+    Nova::Chassis chassis, 
+    Nova::Intake intake, 
+    Nova::Clamp clamp
+):
     chassis(chassis),
     intake(intake),
     clamp(clamp)
 {};
 
+/**
+ * @brief Translate the Robot in x or y directions
+ * 
+ * @param dist 
+ */
 void Nova::Auton::translate(float dist) {
     Nova::PID chassisPID = Nova::PID(
         0, 
@@ -78,6 +95,11 @@ void Nova::Auton::translate(float dist) {
     turnPID.reset();
 }
 
+/**
+ * @brief Rotate the Robot in 360 degree directions
+ * 
+ * @param angle 
+ */
 void Nova::Auton::rotate(float angle) {
     PID turnPID = PID(
         0, 
@@ -105,6 +127,11 @@ void Nova::Auton::rotate(float angle) {
     turnPID.reset();
 }
 
+/**
+ * @brief Rotate the Robot in a 360 degree direction with 90 to North
+ * 
+ * @param angle 
+ */
 void Nova::Auton::rotateAbsolute(float angle) {
     PID turnPID = PID(
         0, 
@@ -130,144 +157,10 @@ void Nova::Auton::rotateAbsolute(float angle) {
     turnPID.reset();
 }
 
-void Nova::Auton::swerveRight(float dist, float angle) {
-    PID chassisPID = PID(
-        0, 
-        1.5, 
-        0.0, 
-        8.5, 
-        250, 
-        50, 
-        250, 
-        5000
-    );
-
-    PID turnPID = PID(
-        0, 
-        0.1, 
-        0.0, 
-        1, 
-        100
-    );
-
-    PID swingPID = PID(
-        0, 
-        3.0, 
-        0.0, 
-        2.0, 
-        250,
-        50, 
-        250, 
-        5000
-    );
-
-    this -> chassis.resetMotorEncoders();
-
-    float targetPosition = dist * 46.28245103; // dist * 300/2pir
-    float targetAngle = chassis.getIMURotation();
-    float targetSwerveAngle = chassis.getIMURotation() - angle;
-    float timeSpentStalled = 0;
-    const float MIN_STALL_POWER = 30, MIN_STALL_VELOCITY = 10, MIN_STALL_TIME = 400;
-
-    while (!(swingPID.isSettled())) {
-        float chassisError = targetPosition - this-> chassis.getAvgEncoderValue();
-        float turnError = targetAngle - this-> chassis.getIMURotation();
-        float swerveError = targetSwerveAngle - this->chassis.getIMURotation();
-
-        float chassisOutput = chassisPID.compute(chassisError);
-        float turnOutput = turnPID.compute(turnError);
-        float swerveOutput = swingPID.compute(swerveError);
-        
-        float chassisPower = chassisOutput > 500 ? 500 : chassisOutput;
-        float turnPower = turnOutput > 500 ? 500 : turnOutput;
-        float swervePower = swerveOutput > 500 ? 500 : swerveOutput;
-
-        Nova::leftDrive.move(chassisPower + turnPower);
-        Nova::rightDrive.move(chassisPower - turnPower - swervePower);
-
-        pros::delay(10);
-
-        if (fabs(chassisPower) < MIN_STALL_POWER && fabs(this -> chassis.getAvgVelocity()) < MIN_STALL_VELOCITY) timeSpentStalled += 10;
-        else timeSpentStalled = 0;
-
-        if (timeSpentStalled > MIN_STALL_TIME) break;
-    }
-    
-    Nova::drive.brake();
-    chassisPID.reset();
-    turnPID.reset();
-    swingPID.reset();
-}
-
-void Nova::Auton::swerveLeft(float dist, float angle) { 
-     PID chassisPID = PID(
-        0, 
-        1.5, 
-        0.0, 
-        8.5, 
-        250, 
-        50, 
-        250, 
-        5000
-    );
-
-    PID turnPID = PID(
-        0, 
-        0.1, 
-        0.0, 
-        1, 
-        100
-    );
-
-    PID swingPID = PID(
-        0, 
-        3.0, 
-        0.0, 
-        2.0, 
-        250,
-        50, 
-        250, 
-        5000
-    );
-
-    this -> chassis.resetMotorEncoders();
-
-    float targetPosition = dist * 46.28245103; // dist * 300/2pir
-    float targetAngle = chassis.getIMURotation();
-    float targetSwerveAngle = chassis.getIMURotation() + angle;
-    float timeSpentStalled = 0;
-    const float MIN_STALL_POWER = 30, MIN_STALL_VELOCITY = 10, MIN_STALL_TIME = 400;
-
-    while (!(swingPID.isSettled())) {
-        float chassisError = targetPosition - this-> chassis.getAvgEncoderValue();
-        float turnError = targetAngle - this-> chassis.getIMURotation();
-        float swerveError = targetSwerveAngle - this->chassis.getIMURotation();
-
-        float chassisOutput = chassisPID.compute(chassisError);
-        float turnOutput = turnPID.compute(turnError);
-        float swerveOutput = swingPID.compute(swerveError);
-        
-        float chassisPower = chassisOutput > 500 ? 500 : chassisOutput;
-        float turnPower = turnOutput > 500 ? 500 : turnOutput;
-        float swervePower = swerveOutput > 500 ? 500 : swerveOutput;
-
-        Nova::leftDrive.move(chassisPower + turnPower + swervePower);
-        Nova::rightDrive.move(chassisPower - turnPower);
-
-        pros::delay(10);
-
-        if (fabs(chassisPower) < MIN_STALL_POWER && fabs(this -> chassis.getAvgVelocity()) < MIN_STALL_VELOCITY) timeSpentStalled += 10;
-        else timeSpentStalled = 0;
-
-        if (timeSpentStalled > MIN_STALL_TIME) break;
-    }
-    
-    Nova::drive.brake();
-    chassisPID.reset();
-    turnPID.reset();
-    swingPID.reset();
-}
-
+/**
+ * @brief Blue 1 Auton Elim
+ * 
+ */
 void Nova::Auton::blue1Elims() {
     this -> translate(24);
 }

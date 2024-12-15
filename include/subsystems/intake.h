@@ -1,8 +1,8 @@
 /**
  * \file intake.h
  *
- * Updated - 11/30/2024
- * Last Successful Test - 11/30/2024
+ * Updated - 12/15/2024
+ * Last Successful Test - 12/15/2024
  */ 
 
 #ifndef _INTAKE_H_
@@ -15,6 +15,6 @@ namespace Nova {
 
             void run();
     };
-}
+} // namespace Nova
 
-#endif
+#endif // _INTAKE_H_

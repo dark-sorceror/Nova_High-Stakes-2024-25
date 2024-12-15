@@ -1,12 +1,22 @@
 /**
  * \file PID.cpp
  *
- * Updated - 1/13/2024
- * Last Successful Test - 1/10/2024
+ * Updated - 12/15/2024
+ * Last Successful Test - 12/15/2024
  */ 
 
 #include "main.h"
 
+/**
+ * @brief Construct a new Nova::PID::PID object
+ * 
+ * @param error 
+ * @param kP 
+ * @param kI 
+ * @param kD 
+ * @param maxCumulativeError 
+ * @param loopTime 
+ */
 Nova::PID::PID (
         float error,
         float kP, 
@@ -24,6 +34,19 @@ Nova::PID::PID (
     loopTime(loopTime)
 {};
 
+/**
+ * @brief Construct a new Nova:: PID::PID object
+ * 
+ * @param error 
+ * @param kP 
+ * @param kI 
+ * @param kD 
+ * @param maxCumulativeError 
+ * @param settleError 
+ * @param settleTime 
+ * @param timeout 
+ * @param loopTime 
+ */
 Nova::PID::PID (
         float error,
         float kP,
@@ -47,14 +70,16 @@ Nova::PID::PID (
     loopTime(loopTime)
 {};
 
+/**
+ * @brief Compute the error Robot has from the target
+ * 
+ * @param error 
+ * @return float 
+ */
 float Nova::PID::compute(float error) {
-    if (fabs(error) < maxCumulativeError) {
-        accumulatedError += error;
-    }
+    if (fabs(error) < maxCumulativeError) accumulatedError += error;
 
-    if ((error > 0 && prevError < 0) || (error < 0 && prevError > 0)) {
-        accumulatedError = 0;
-    }
+    if ((error > 0 && prevError < 0) || (error < 0 && prevError > 0)) accumulatedError = 0;
 
     /*
     futureError = (error - prevError);
@@ -70,29 +95,32 @@ float Nova::PID::compute(float error) {
     acceleration = futureError - prevDeriv;
     prevDeriv = futureError;
     
-    if (fabs(error) < settleError) {
-        timeSpentSettled += loopTime;
-    } else {
-        timeSpentSettled = 0;
-    }
+    if (fabs(error) < settleError) timeSpentSettled += loopTime;
+    else timeSpentSettled = 0;
 
     timeSpentRunning += loopTime;
 
     return output;
 }
 
+/**
+ * @brief Checks whether PID loop is settled
+ * 
+ * @return true 
+ * @return false 
+ */
 bool Nova::PID::isSettled() {
-    if (timeSpentRunning > timeout && timeout != 0) {
-        return true;
-    }
+    if (timeSpentRunning > timeout && timeout != 0) return true;
 
-    if (timeSpentSettled > settleTime) {
-        return true;
-    }
+    if (timeSpentSettled > settleTime) return true;
 
     return false;
 }
 
+/**
+ * @brief Reset PID loop
+ * 
+ */
 void Nova::PID::reset() {
     accumulatedError = 0;
     futureError = 0;
@@ -107,6 +135,14 @@ void Nova::PID::reset() {
     timeSpentRunning = 0;
 }
 
+/**
+ * @brief Setting the PID Constants
+ * 
+ * @param kP 
+ * @param kI 
+ * @param kD 
+ * @param maxCumulativeError 
+ */
 void Nova::PID::setkConstants (
         float kP, 
         float kI, 
@@ -120,6 +156,13 @@ void Nova::PID::setkConstants (
     this -> maxCumulativeError = maxCumulativeError;
 } 
 
+/**
+ * @brief Setting the Exit Condition Constants
+ * 
+ * @param settleError 
+ * @param settleTime 
+ * @param timeout 
+ */
 void Nova::PID::setExitConditionConstants (
         float settleError, 
         float settleTime, 

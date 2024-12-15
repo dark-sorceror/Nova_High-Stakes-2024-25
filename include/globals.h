@@ -3,8 +3,8 @@
  *
  * \brief Contains global system definitions for globals.cpp
  * 
- * Updated - 11/30/2024
- * Last Successful Test - 11/30/2024
+ * Updated - 12/15/2024
+ * Last Successful Test - 12/15/2024
  */
 
 #ifndef _GLOBALS_H_

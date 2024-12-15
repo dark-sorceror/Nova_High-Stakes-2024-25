@@ -1,8 +1,8 @@
 /**
  * \file auton.h
  *
- * Updated - 1/10/2024
- * Last Successful Test - 1/10/2024
+ * Updated - 12/15/2024
+ * Last Successful Test - 12/15/2024
  */ 
 
 #ifndef _AUTON_H_
@@ -23,13 +23,10 @@ namespace Nova {
             Intake intake;
             Clamp clamp;
 
-            //void trackPosition(int left, int right);
             void translate(float dist);
             void rotate(float angle);
             void rotateAbsolute(float angle);
-            void swerveLeft(float dist, float angle);
-            void swerveRight(float dist, float angle);
     };
-}
+} // namespace Nova
 
-#endif
+#endif // _AUTON_H_
