@@ -10,9 +10,11 @@
 #include "main.h"
 
 Nova::Brain brain = Nova::Brain();
-Nova::Chassis drive = Nova::Chassis();
+Nova::Chassis chassis = Nova::Chassis();
 Nova::Intake intake = Nova::Intake();
 Nova::Clamp clamp = Nova::Clamp();
+Nova::Doinker doinker = Nova::Doinker();
+Nova::Auton auton = Nova::Auton(chassis, intake, clamp);
 
 /**
  * @brief Initialize
@@ -22,10 +24,10 @@ void initialize() {
     //pros::lcd::initialize();
     brain.initialize();
 
-    drive.initialize();
-    drive.calibrate();
+    chassis.initialize();
+    chassis.calibrate();
 
-    lv_task_handler();
+    intake.initialize();
 }
 
 void disabled() {}
@@ -37,10 +39,10 @@ void disabled() {}
 void competition_initialize() {
     brain.initialize();
 
-    drive.initialize();
-    drive.calibrate();
+    chassis.initialize();
+    chassis.calibrate();
 
-    lv_task_handler();
+    intake.initialize();
 
     autonomous();
 }
@@ -50,6 +52,7 @@ void competition_initialize() {
  * 
  */
 void autonomous() {
+    auton.blue1Elims();
     // Nova::moveToPos(10.0, 10.0, M_PI / 2.0); // 10 cm, 10 cm, 90 degrees
 }
 
@@ -58,14 +61,13 @@ void autonomous() {
  * 
  */
 void opcontrol() {
-    intake.colorSort();
-
     while (true) {
-        Nova::update(); // tracking algorithm loop
+        //Nova::update(); // tracking algorithm loop
 
-        drive.run();
+        chassis.run();
         intake.run();
         clamp.run();
+        doinker.run();
 
         pros::delay(10);
     }

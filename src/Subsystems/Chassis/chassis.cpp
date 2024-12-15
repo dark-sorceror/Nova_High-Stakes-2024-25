@@ -27,10 +27,11 @@ void Nova::Chassis::initialize() {
  * @return double 
  */
 double Nova::Chassis::smooth(double input) {
-    const int CURVECONSTANT = 10;
+    const int CURVECONSTANT = 5;
 
     return (std::pow(2.718, -(CURVECONSTANT / 10)) + std::pow(2.718, (std::abs(input) - 127) / 10) * (1 - std::pow(2.718, -(CURVECONSTANT / 10)))) * input;
 }
+
 
 /**
  * @brief Calibrate Chassis

@@ -5,21 +5,13 @@
  * Last Successful Test - 11/30/2024
  */ 
 
-#ifndef __CLAMP
-#define __CLAMP
+#ifndef _CLAMP_H_
+#define _CLAMP_H_
 
 namespace Nova {
     class Clamp {
         public:
-            void open();
-
-            void close();
-
-            void toggle();
-
             void run();
-        private:           
-            bool active = false;
     };
 }
 

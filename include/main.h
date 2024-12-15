@@ -28,12 +28,16 @@
 #include "globals.h"
 
 #include "pose.h"
+#include "pid.h"
+#include "utils.h"
+#include "auton.h"
 
 #include "Subsystems/Chassis/chassis.h"
 #include "Subsystems/Chassis/odom.h"
 
 #include "Subsystems/intake.h"
 #include "Subsystems/clamp.h"
+#include "subsystems/doinker.h"
 
 #include "../renders/logo.c"
 #include "../renders/logo_2.c"

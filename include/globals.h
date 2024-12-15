@@ -36,6 +36,7 @@ namespace Nova {
     extern pros::v5::Motor intake;
 
     extern pros::adi::Pneumatics clamp;
+    extern pros::adi::Pneumatics doinker;
 
     // Auton dependent
     extern pros::v5::Imu imu1;

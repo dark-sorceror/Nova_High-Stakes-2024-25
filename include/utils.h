@@ -10,11 +10,6 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
-#include <variant>
-#include <vector>
-
-using Num = std::variant<int, float>;
-
-float average(std::vector<Num> const& v) {
+template <typename T> constexpr T sgn(T value) { return value < 0 ? -1 : 1; }
 
 #endif // _UTILS_H_

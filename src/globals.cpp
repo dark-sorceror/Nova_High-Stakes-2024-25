@@ -54,11 +54,17 @@ namespace Nova {
     pros::Motor intake(6);
 
     pros::adi::Pneumatics clamp('A', LOW);
+    pros::adi::Pneumatics doinker('B', LOW);
 
     pros::Optical optical(5);
 
     pros::Imu imu1(3);
     pros::Imu imu2(9);
+
+    pros::Motor lb1(11);    
+    pros::Rotation lbR(12);
+    pros::Motor lb2(13);
+
 
     pros::Rotation horizontalEncoder(2);
 } // namespace Nova

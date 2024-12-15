@@ -1,18 +1,16 @@
 /**
- * \file intake.h
+ * \file doinker.h
  *
  * Updated - 11/30/2024
  * Last Successful Test - 11/30/2024
  */ 
 
-#ifndef _INTAKE_H_
-#define _INTAKE_H_
+#ifndef _DOINKER_H_
+#define _DOINKER_H_
 
 namespace Nova {
-    class Intake {
+    class Doinker {
         public:
-            void initialize();
-
             void run();
     };
 }
