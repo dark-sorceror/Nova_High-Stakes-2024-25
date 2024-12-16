@@ -5,7 +5,9 @@
  * Last Successful Test - 12/15/2024
  */ 
 
-#include "main.h"
+#include <cmath>
+
+#include "pid.h"
 
 /**
  * @brief Construct a new Nova::PID::PID object

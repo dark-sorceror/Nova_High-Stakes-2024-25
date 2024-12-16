@@ -5,12 +5,14 @@
  * Last Successful Test - 12/15/2024
  */ 
 
-#include "auton.h"
 #include "globals.h"
 
-#include "Subsystems/Chassis/chassis.h"
-#include "Subsystems/intake.h"
-#include "Subsystems/clamp.h"
+#include "pid.h"
+#include "auton.h"
+
+#include "components/chassis/chassis.h"
+#include "components/intake.h"
+#include "components/clamp.h"
 
 /*
 1800 ticks/rev with 36:1 gears red

@@ -3,12 +3,23 @@
  *
  * \brief Contains lvgl implementation for auton planner logic on brain
  * 
- * Updated - 11/30/2024
- * Last Successful Test - 11/30/2024
+ * Updated - 12/15/2024
+ * Last Successful Test - 12/15/2024
  */
 
-#include "main.h"
-#include <vector>
+#include "lvgl.h"
+
+#include "globals.h"
+
+#include "components/brain.h"
+
+#include "../renders/logo.c"
+#include "../renders/logo_2.c"
+#include "../renders/field.c"
+
+LV_IMG_DECLARE(logo);
+LV_IMG_DECLARE(logo_2);
+LV_IMG_DECLARE(field);
 
 static void btn_event_handler(lv_event_t * e);
 
@@ -53,6 +64,14 @@ typedef enum {
     BTN_UNKNOWN
 } ButtonType;
 
+/**
+ * @brief Create back button
+ * 
+ * @param screen 
+ * @param align 
+ * @param offset 
+ * @param label_color 
+ */
 static void back_btn(
     lv_obj_t * screen,
     lv_align_t align,
@@ -72,6 +91,14 @@ static void back_btn(
     lv_obj_set_style_text_color(back_text, label_color, LV_PART_MAIN);
 }
 
+/**
+ * @brief Create back button 2
+ * 
+ * @param screen 
+ * @param align 
+ * @param offset 
+ * @param label_color 
+ */
 static void back_btn_2(
     lv_obj_t * screen,
     lv_align_t align,
@@ -91,12 +118,32 @@ static void back_btn_2(
     lv_obj_set_style_text_color(back_text, label_color, LV_PART_MAIN);
 }
 
+/**
+ * @brief Display version
+ * 
+ * @param screen 
+ */
 static void version(lv_obj_t * screen) {
     lv_obj_t * text = lv_label_create(screen);
     lv_label_set_text(text, Nova::VERSION);
     lv_obj_align(text, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
 }
 
+/**
+ * @brief Create Button
+ * 
+ * @param screen 
+ * @param width 
+ * @param height 
+ * @param border_width 
+ * @param border_color 
+ * @param bg_color 
+ * @param align 
+ * @param offset 
+ * @param label 
+ * @param label_color 
+ * @param btn_id 
+ */
 static void button(
     lv_obj_t * screen,
     int width,
@@ -129,6 +176,15 @@ static void button(
     }
 }
 
+/**
+ * @brief Create text
+ * 
+ * @param screen 
+ * @param text 
+ * @param color 
+ * @param align 
+ * @param offset 
+ */
 static void text(
     lv_obj_t * screen,
     const char * text,
@@ -147,7 +203,21 @@ static void text(
     lv_obj_align(textLabel, align, offset.x, offset.y);
 }
 
-static lv_color_t determine_text_color(int value, int sign, int green, int yellow) {
+/**
+ * @brief Determine text color
+ * 
+ * @param value 
+ * @param sign 
+ * @param green 
+ * @param yellow 
+ * @return lv_color_t 
+ */
+static lv_color_t determine_text_color(
+    int value, 
+    int sign, 
+    int green, 
+    int yellow
+) {
     if (value >= 1) return lv_color_hex(0x32CD32); // green
     else if (value == 0) return lv_color_hex(0xD22B2B); // red
     else if (value == -1) return lv_color_hex(0x353935); // grey
@@ -157,6 +227,14 @@ static lv_color_t determine_text_color(int value, int sign, int green, int yello
     else return lv_color_hex(0xD22B2B); // red
 }
 
+/**
+ * @brief Create image
+ * 
+ * @param screen 
+ * @param ptr_img 
+ * @param align 
+ * @param offset 
+ */
 static void image(
     lv_obj_t * screen,
     const lv_img_dsc_t * ptr_img,
@@ -170,6 +248,11 @@ static void image(
     lv_obj_align(img, align, offset.x, offset.y);
 }
 
+/**
+ * @brief Button event handler
+ * 
+ * @param e 
+ */
 static void btn_event_handler(lv_event_t * e) {
     lv_obj_t * btn = lv_event_get_target(e);
 
@@ -250,11 +333,17 @@ static void btn_event_handler(lv_event_t * e) {
 
             if (autonSelected = Auton::BLUE_1) //run auton
 
+            break;
+
         default:
             break;
     }
 }
 
+/**
+ * @brief Home screen
+ * 
+ */
 static void home_screen(void) {
     s_home_screen = lv_obj_create(NULL);
 
@@ -269,6 +358,10 @@ static void home_screen(void) {
     version(s_home_screen);
 }
 
+/**
+ * @brief Logo screen
+ * 
+ */
 static void logo_screen(void) {
     s_logo_screen = lv_obj_create(NULL);
 
@@ -277,6 +370,10 @@ static void logo_screen(void) {
     back_btn(s_logo_screen, LV_ALIGN_TOP_LEFT, {0, 0}, lv_color_hex(0));
 }
 
+/**
+ * @brief Match screen
+ * 
+ */
 static void match_screen(void) {
     s_match_screen = lv_obj_create(NULL);
 
@@ -337,6 +434,10 @@ static void match_screen(void) {
     button(s_match_screen, 95, 60, 2, lv_color_hex(0xEE4B2B), lv_color_hex(0), LV_ALIGN_BOTTOM_LEFT, {25, -25}, NULL, lv_color_hex(0xFFFFFFF), BTN_RED_2);
 }
 
+/**
+ * @brief Robot screen
+ * 
+ */
 static void robot_screen(void) {
     s_robot_screen = lv_obj_create(NULL);
 
@@ -427,6 +528,10 @@ static void robot_screen(void) {
     }
 }
 
+/**
+ * @brief Testing screen
+ * 
+ */
 static void testing_screen(void) {
     s_testing_screen = lv_obj_create(NULL);
 
@@ -518,6 +623,10 @@ static void testing_screen(void) {
     button(s_testing_screen, 170, 40, 2, lv_color_hex(0xFFFFFF), lv_color_hex(0), LV_ALIGN_RIGHT_MID, {-27, -20}, "Confirm", lv_color_hex(0xFFFFFFF), BTN_CONFIRM);
 }
 
+/**
+ * @brief Initialize
+ * 
+ */
 void Nova::Brain::initialize(void) {
     lv_init();
 

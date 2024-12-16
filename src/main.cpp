@@ -10,10 +10,15 @@
 #include "main.h"
 
 Nova::Brain brain = Nova::Brain();
+
 Nova::Chassis chassis = Nova::Chassis();
+
 Nova::Intake intake = Nova::Intake();
+
 Nova::Clamp clamp = Nova::Clamp();
+
 Nova::Doinker doinker = Nova::Doinker();
+
 Nova::Auton auton = Nova::Auton(chassis, intake, clamp);
 
 /**
@@ -53,7 +58,6 @@ void competition_initialize() {
  */
 void autonomous() {
     auton.blue1Elims();
-    // Nova::moveToPos(10.0, 10.0, M_PI / 2.0); // 10 cm, 10 cm, 90 degrees
 }
 
 /**
@@ -65,8 +69,10 @@ void opcontrol() {
         //Nova::update(); // tracking algorithm loop
 
         chassis.run();
+
         intake.run();
         clamp.run();
+
         doinker.run();
 
         pros::delay(10);

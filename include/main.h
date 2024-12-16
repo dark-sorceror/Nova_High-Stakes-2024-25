@@ -23,7 +23,7 @@
 #include "api.h"
 
 // libNova
-#include "Subsystems/brain.h"
+#include "components/brain.h"
 
 #include "globals.h"
 
@@ -32,20 +32,12 @@
 #include "utils.h"
 #include "auton.h"
 
-#include "Subsystems/Chassis/chassis.h"
-#include "Subsystems/Chassis/odom.h"
+#include "components/chassis/chassis.h"
+#include "components/chassis/odom.h"
 
-#include "Subsystems/intake.h"
-#include "Subsystems/clamp.h"
-#include "subsystems/doinker.h"
-
-#include "../renders/logo.c"
-#include "../renders/logo_2.c"
-#include "../renders/field.c"
-
-LV_IMG_DECLARE(logo);
-LV_IMG_DECLARE(logo_2);
-LV_IMG_DECLARE(field);
+#include "components/intake.h"
+#include "components/clamp.h"
+#include "components/doinker.h"
 
 #ifdef __cplusplus
 extern "C" {

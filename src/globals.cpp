@@ -7,7 +7,7 @@
  * Last Successful Test - 12/15/2024
  */
 
-#include "main.h"
+#include "api.h"
 
 namespace Nova {
     const std::string TEAM_NAME = "Nova";
@@ -60,11 +60,6 @@ namespace Nova {
 
     pros::Imu imu1(3);
     pros::Imu imu2(9);
-
-    pros::Motor lb1(11);    
-    pros::Rotation lbR(12);
-    pros::Motor lb2(13);
-
 
     pros::Rotation horizontalEncoder(2);
 } // namespace Nova

@@ -10,7 +10,7 @@
 #ifndef _ODOM_H_
 #define _ODOM_H_
 
-#include "main.h"
+#include "pose.h"
 
 namespace Nova {
     /**

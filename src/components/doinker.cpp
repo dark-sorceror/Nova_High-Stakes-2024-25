@@ -7,7 +7,9 @@
  * Last Successful Test - 11/30/2024
  */
 
-#include "main.h"
+#include "globals.h"
+
+#include "components/doinker.h"
 
 bool donkerToggle = false;
 

@@ -7,9 +7,12 @@
  * Last Successful Test - 11/30/2024
  */
 
-#include <math.h>
+#include <cmath>
 
-#include "main.h"
+#include "globals.h"
+
+#include "odom.h"
+#include "pose.h"
 
 Nova::Pose odomPose(0, 0, 0);
 Nova::Pose odomSpeed(0, 0, 0);

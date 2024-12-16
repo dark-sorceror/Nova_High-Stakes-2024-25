@@ -3,11 +3,13 @@
  *
  * \brief Contains clamp logic
  *
- * Updated - 11/30/2024
- * Last Successful Test - 11/30/2024
+ * Updated - 12/15/2024
+ * Last Successful Test - 12/15/2024
  */
 
-#include "main.h"
+#include "globals.h"
+
+#include "components/clamp.h"
 
 bool clampToggle = false;
 

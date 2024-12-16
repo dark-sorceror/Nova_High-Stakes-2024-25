@@ -7,7 +7,9 @@
  * Last Successful Test - 12/15/2024
  */
 
-#include "main.h"
+#include "globals.h"
+
+#include "components/intake.h"
 
 /**
  * @brief Initialize Intake

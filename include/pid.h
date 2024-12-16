@@ -1,5 +1,5 @@
 /**
- * \file PID.hpp
+ * \file PID.h
  *
  * Updated - 12/15/2024
  * Last Successful Test - 12/15/2024
@@ -11,6 +11,16 @@
 namespace Nova {
     class PID {
         public:
+            /**
+             * @brief Construct a new PID object
+             * 
+             * @param error 
+             * @param kP 
+             * @param kI 
+             * @param kD 
+             * @param maxCumulativeError 
+             * @param loopTime 
+             */
             PID (
                 float error,
                 float kP,
@@ -20,6 +30,19 @@ namespace Nova {
                 float loopTime = 10
             );
 
+            /**
+             * @brief Construct a new PID object
+             * 
+             * @param error 
+             * @param kP 
+             * @param kI 
+             * @param kD 
+             * @param maxCumulativeError 
+             * @param settleError 
+             * @param settleTime 
+             * @param timeout 
+             * @param loopTime 
+             */
             PID (
                 float error, 
                 float kP, 
@@ -31,6 +54,7 @@ namespace Nova {
                 float timeout,
                 float loopTime = 10
             );
+
             float kP = 0;
             float kI = 0;
             float kD = 0;
@@ -55,10 +79,36 @@ namespace Nova {
 
             float output = 0;
 
+            /**
+             * @brief Compute error of Robot from the target position
+             * 
+             * @param error 
+             * @return float 
+             */
             float compute(float error);
+
+            /**
+             * @brief Check is PID loop is settled
+             * 
+             * @return true 
+             * @return false 
+             */
             bool isSettled();
+
+            /**
+             * @brief Reset PID loop
+             * 
+             */
             void reset();
 
+            /**
+             * @brief Set PID loop constants
+             * 
+             * @param kP 
+             * @param kI 
+             * @param kD 
+             * @param maxCumulativeError 
+             */
             void setkConstants(
                 float kP,
                 float kI,
@@ -66,6 +116,13 @@ namespace Nova {
                 float maxCumulativeError
             );
             
+            /**
+             * @brief Set the Exit Condition Constants object
+             * 
+             * @param settleError 
+             * @param settleTime 
+             * @param timeout 
+             */
             void setExitConditionConstants(
                 float settleError,
                 float settleTime,
