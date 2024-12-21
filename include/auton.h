@@ -11,6 +11,12 @@
 #include "components/chassis/chassis.h"
 #include "components/intake.h"
 #include "components/clamp.h"
+#include <vector>
+
+struct Point {
+    float x;
+    float y;
+};
 
 namespace Nova {
     class Auton {
@@ -54,6 +60,8 @@ namespace Nova {
              * @param angle 
              */
             void rotateAbsolute(float angle);
+
+            void followPath(const std::vector<Point> &waypoints);
     };
 } // namespace Nova
 

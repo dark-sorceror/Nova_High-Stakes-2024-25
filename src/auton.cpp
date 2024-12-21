@@ -3,7 +3,7 @@
  *
  * Updated - 12/15/2024
  * Last Successful Test - 12/15/2024
- */ 
+ */
 
 #include "globals.h"
 
@@ -25,33 +25,33 @@ omni wheel circumference =  2pi 3.25 inch = 20.42 inches / rev
 
 /**
  * @brief Construct a new Nova::Auton::Auton object
- * 
- * @param chassis 
- * @param intake 
- * @param clamp 
+ *
+ * @param chassis
+ * @param intake
+ * @param clamp
  */
 Nova::Auton::Auton(
-    Nova::Chassis chassis, 
-    Nova::Intake intake, 
+    Nova::Chassis chassis,
+    Nova::Intake intake,
     Nova::Clamp clamp
-):
+): 
     chassis(chassis),
     intake(intake),
-    clamp(clamp)
+    clamp(clamp) 
 {};
 
 /**
  * @brief Translate the Robot in x or y directions
- * 
+ *
  * @param dist //inches
  */
 void Nova::Auton::translate(float dist) {
     Nova::PID chassisPID = Nova::PID(
-        1, //kp
-        0, // ki
+        1,  // kp
+        0,  // ki
         12, // kd
         10, // max cumulative error inches
-        5, // settle error inchjes
+        5,  // settle error inchjes
         100 // settle time MILLIS
     );
 
@@ -76,19 +76,19 @@ void Nova::Auton::translate(float dist) {
 
     chassisPID.reset();
 
-    //Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
+    // Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
 }
 
 void Nova::Auton::rotate(float angle) {
     Nova::PID turnPID = Nova::PID(
-        1, //kp
-        0, // ki
-        0, // kd
+        1,   // kp
+        0,   // ki
+        0,   // kd
         110, // max cumulative error degrees
-        10, // settle error degrees
-        100 // settle time MILLIS
+        10,  // settle error degrees
+        100  // settle time MILLIS
     );
-    
+
     float targetPosition = this -> chassis.getIMURotation() + angle;
 
     while (!(turnPID.isSettled())) {
@@ -109,11 +109,81 @@ void Nova::Auton::rotate(float angle) {
     turnPID.reset();
 }
 
+float distanceBetweenPoints(const Point &a, const Point &b) {
+    return sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2));
+}
+
+float calculateCurvature(const Point &prev, const Point &curr, const Point &next) {
+    float angle1 = atan2(curr.y - prev.y, curr.x - prev.x);
+    float angle2 = atan2(next.y - curr.y, next.x - curr.x);
+
+    return (angle2 - angle1);
+}
+
+void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
+    Nova::PID chassisPID = Nova::PID(
+        1,  // kp
+        0,  // ki
+        12, // kd
+        10, // max cumulative error inches
+        5,  // settle error inchjes
+        100 // settle time MILLIS
+    );
+
+    this -> chassis.resetMotorEncoders();
+
+    for (size_t i = 0; i < waypoints.size() - 1; ++i) {
+        Point startPoint = waypoints[i];
+        Point endPoint = waypoints[i + 1];
+
+        float segementDistance = distanceBetweenPoints(startPoint, endPoint);
+
+        float curvature = 0.0f;
+
+        if (i > 0 && i < waypoints.size() - 1) {
+            curvature = calculateCurvature(waypoints[i - 1], startPoint, endPoint);
+        }
+
+        float targetPosition = segementDistance * 46.28245103;
+
+        while (fabs(Nova::backLeft.get_position() - targetPosition) > 10) {
+            float chassisError = targetPosition - Nova::backLeft.get_position();
+
+            float chassisOutput = chassisPID.compute(chassisError);
+
+            float leftSpeed = chassisOutput;
+            float rightSpeed = chassisOutput;
+
+            if (curvature > 0) {
+                leftSpeed -= curvature * 50;
+                rightSpeed += curvature * 50;
+            } else if (curvature < 0) {
+                leftSpeed += (-curvature) * 50;
+                rightSpeed -= (-curvature) * 50;
+            }
+
+            leftSpeed = fmin(fmax(leftSpeed, -120), 120);
+            rightSpeed = fmin(fmax(rightSpeed, -120), 120);
+
+            Nova::leftDrive.move(leftSpeed);
+            Nova::rightDrive.move(rightSpeed);
+
+            pros::delay(10);
+        }
+
+        chassisPID.reset();
+    }
+}
+
 void Nova::Auton::blue1Elims() {
-    this -> translate(24);
-    this -> rotate(90);
-    this -> translate(-24);
-    this -> rotate(90);
-    this -> translate(24);
-    this -> rotate(180);
+    std::vector<Point> waypoints = {
+        {0.0, 0.0},   // Start point
+        {10.0, 0.0},  // Waypoint 1
+        {15.0, 5.0},  // Waypoint 2 (curved segment)
+        {20.0, 0.0},  // Waypoint 3
+        {30.0, -5.0}, // Waypoint 4 (curved segment)
+        {40.0, 0.0}   // End point
+    };
+
+    this -> followPath(waypoints);
 }
