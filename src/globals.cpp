@@ -58,8 +58,8 @@ namespace Nova {
 
     pros::Optical optical(5);
 
-    pros::Imu imu1(3);
-    pros::Imu imu2(9);
+    pros::Imu imu1(19);
+    pros::Imu imu2(20);
 
     pros::Rotation horizontalEncoder(2);
 } // namespace Nova

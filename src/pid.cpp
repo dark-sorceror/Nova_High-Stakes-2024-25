@@ -104,7 +104,6 @@ void Nova::PID::reset() {
 
     acceleration = 0;
     prevDeriv = 0;
-    error = 0;
     output = 0;
 
     startTime = -1;

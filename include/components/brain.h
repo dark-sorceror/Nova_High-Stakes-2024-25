@@ -57,11 +57,11 @@ extern lv_obj_t * s_robot_screen;
 
 extern int autonSelected;
 
-void home_screen(void);
-void match_screen(void);
-void logo_screen(void);
-void testing_screen(void);
-void robot_screen(void);
+static void home_screen(void);
+static void match_screen(void);
+static void logo_screen(void);
+static void testing_screen(void);
+static void robot_screen(void);
 
 /**
  * @brief Create back button

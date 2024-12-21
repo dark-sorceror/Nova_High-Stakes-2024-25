@@ -53,16 +53,14 @@ namespace Nova {
             float accumulatedError = 0;
             float maxCumulativeError = 0;
             float futureError = 0;
-            float error = 0;
             float prevError = 0;
-            float maxIntegral = 20;
+            float maxIntegral = 100;
             float alpha = 0.1;
 
             float settleTime = 0;
             float settleError = 0;
             float startTime = -1;
             float done = false;
-            float prevTime = 0;
 
             float output = 0;
     };

@@ -10,6 +10,8 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+#include "api.h"
+
 /**
  * @brief Get the sign of a value
  * 

@@ -9,7 +9,7 @@
 
 #include "main.h"
 
-Nova::Brain brain = Nova::Brain();
+//Nova::Brain brain = Nova::Brain();
 
 Nova::Chassis chassis = Nova::Chassis();
 
@@ -27,10 +27,11 @@ Nova::Auton auton = Nova::Auton(chassis, intake, clamp);
  */
 void initialize() {
     //pros::lcd::initialize();
-    brain.initialize();
+    //brain.initialize();
 
     chassis.initialize();
-    chassis.calibrate();
+    Nova::imu1.reset();
+    Nova::imu2.reset();
 
     intake.initialize();
 }
@@ -42,10 +43,11 @@ void disabled() {}
  * 
  */
 void competition_initialize() {
-    brain.initialize();
+    //brain.initialize();
 
     chassis.initialize();
-    chassis.calibrate();
+    Nova::imu1.reset();
+    Nova::imu2.reset();
 
     intake.initialize();
 
@@ -74,6 +76,8 @@ void opcontrol() {
         clamp.run();
 
         doinker.run();
+
+        Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
 
         pros::delay(10);
     }

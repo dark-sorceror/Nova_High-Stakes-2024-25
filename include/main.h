@@ -23,13 +23,13 @@
 #include "api.h"
 
 // libNova
-#include "components/brain.h"
+//#include "components/brain.h"
 
 #include "globals.h"
 
 #include "pose.h"
 #include "pid.h"
-#include "utils.h"
+//#include "utils.h"
 #include "auton.h"
 
 #include "components/chassis/chassis.h"

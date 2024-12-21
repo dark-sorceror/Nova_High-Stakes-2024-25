@@ -49,9 +49,9 @@ void Nova::Auton::translate(float dist) {
     Nova::PID chassisPID = Nova::PID(
         1, //kp
         0, // ki
-        0, // kd
+        12, // kd
         10, // max cumulative error inches
-        1, // settle error inchjes
+        5, // settle error inchjes
         100 // settle time MILLIS
     );
 
@@ -60,11 +60,11 @@ void Nova::Auton::translate(float dist) {
     float targetPosition = dist * 46.28245103; // dist * 300/2pir
 
     while (!(chassisPID.isSettled())) {
-        float chassisError = targetPosition - this -> chassis.getAvgEncoderValue();
+        float chassisError = targetPosition - Nova::backLeft.get_position();
 
         float chassisOutput = chassisPID.compute(chassisError);
 
-        chassisPID.checkIfSettled(dist - (this -> chassis.getAvgEncoderValue() / 46.28245103));
+        chassisPID.checkIfSettled(dist - (Nova::backLeft.get_position() / 46.28245103));
 
         float chassisPower = chassisOutput > 120 ? 120 : (chassisOutput < -120 ? -120 : chassisOutput);
 
@@ -75,8 +75,45 @@ void Nova::Auton::translate(float dist) {
     }
 
     chassisPID.reset();
+
+    //Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
+}
+
+void Nova::Auton::rotate(float angle) {
+    Nova::PID turnPID = Nova::PID(
+        1, //kp
+        0, // ki
+        0, // kd
+        110, // max cumulative error degrees
+        10, // settle error degrees
+        100 // settle time MILLIS
+    );
+    
+    float targetPosition = this -> chassis.getIMURotation() + angle;
+
+    while (!(turnPID.isSettled())) {
+        float error = targetPosition - this -> chassis.getIMURotation();
+
+        float power = turnPID.compute(error);
+
+        turnPID.checkIfSettled(error);
+
+        float chassisPower = power > 120 ? 120 : (power < -120 ? -120 : power);
+
+        Nova::leftDrive.move(chassisPower);
+        Nova::rightDrive.move(-chassisPower);
+
+        pros::delay(10);
+    }
+
+    turnPID.reset();
 }
 
 void Nova::Auton::blue1Elims() {
     this -> translate(24);
+    this -> rotate(90);
+    this -> translate(-24);
+    this -> rotate(90);
+    this -> translate(24);
+    this -> rotate(180);
 }
