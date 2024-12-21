@@ -17,7 +17,9 @@
  * @param value 
  * @return constexpr T 
  */
-template <typename T> constexpr T sgn(T value) { return value < 0 ? -1 : 1; }
+template <typename T> constexpr T sgn(T value) { 
+    return value < 0 ? -1 : 1; 
+}
 
 /**
  * @brief Calculate average of a vector

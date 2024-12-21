@@ -6,70 +6,24 @@
  */ 
 
 #include <cmath>
+#include "api.h"
 
 #include "pid.h"
 
-/**
- * @brief Construct a new Nova::PID::PID object
- * 
- * @param error 
- * @param kP 
- * @param kI 
- * @param kD 
- * @param maxCumulativeError 
- * @param loopTime 
- */
 Nova::PID::PID (
-        float error,
-        float kP, 
-        float kI,
-        float kD,
-        float maxCumulativeError,
-        float loopTime
-    ):
-
-    error(error),
-    kP(kP),
-    kI(kI),
-    kD(kD),
-    maxCumulativeError(maxCumulativeError),
-    loopTime(loopTime)
-{};
-
-/**
- * @brief Construct a new Nova:: PID::PID object
- * 
- * @param error 
- * @param kP 
- * @param kI 
- * @param kD 
- * @param maxCumulativeError 
- * @param settleError 
- * @param settleTime 
- * @param timeout 
- * @param loopTime 
- */
-Nova::PID::PID (
-        float error,
-        float kP,
-        float kI,
-        float kD,
-        float maxCumulativeError,
-        float settleError,
-        float settleTime,
-        float timeout,
-        float loopTime
-    ):
-
-    error(error),
+    float kP,
+    float kI,
+    float kD,
+    float maxCumulativeError,
+    float settleError,
+    float settleTime
+):
     kP(kP),
     kI(kI),
     kD(kD),
     maxCumulativeError(maxCumulativeError),
     settleError(settleError),
-    settleTime(settleTime),
-    timeout(timeout),
-    loopTime(loopTime)
+    settleTime(settleTime)
 {};
 
 /**
@@ -79,9 +33,21 @@ Nova::PID::PID (
  * @return float 
  */
 float Nova::PID::compute(float error) {
-    if (fabs(error) < maxCumulativeError) accumulatedError += error;
+    float deltaError = error - prevError;
 
-    if ((error > 0 && prevError < 0) || (error < 0 && prevError > 0)) accumulatedError = 0;
+    if (fabs(error) < maxCumulativeError) {
+        accumulatedError += error;
+    }
+
+    if ((error > 0 && prevError < 0) || (error < 0 && prevError > 0)) {
+        accumulatedError = 0;
+    }
+
+    if (accumulatedError > maxIntegral) {
+        accumulatedError = maxIntegral;
+    } else if (accumulatedError < -maxIntegral) {
+        accumulatedError = -maxIntegral;
+    }
 
     /*
     futureError = (error - prevError);
@@ -91,18 +57,19 @@ float Nova::PID::compute(float error) {
     }
     */
 
-    output = kP * error + kI * accumulatedError + kD * (error - prevError);
+    float smoothedDeriv = alpha * deltaError + (1 - alpha) * prevDeriv;
+
+    output = kP * error + kI * accumulatedError + kD * smoothedDeriv;
 
     prevError = error;
     acceleration = futureError - prevDeriv;
-    prevDeriv = futureError;
-    
-    if (fabs(error) < settleError) timeSpentSettled += loopTime;
-    else timeSpentSettled = 0;
-
-    timeSpentRunning += loopTime;
+    prevDeriv = smoothedDeriv; // futureError
 
     return output;
+}
+
+bool Nova::PID::isSettled() {
+    return done;
 }
 
 /**
@@ -111,12 +78,19 @@ float Nova::PID::compute(float error) {
  * @return true 
  * @return false 
  */
-bool Nova::PID::isSettled() {
-    if (timeSpentRunning > timeout && timeout != 0) return true;
+bool Nova::PID::checkIfSettled(float input) {
+    const int currentTime = pros::millis();
 
-    if (timeSpentSettled > settleTime) return true;
+    if (fabs(input) > settleError) {
+        startTime = currentTime;
+        done = false;
+    }
 
-    return false;
+    if (startTime != -1 && currentTime >= startTime + settleTime) {
+        done = true;
+    }
+
+    return done;
 }
 
 /**
@@ -133,8 +107,8 @@ void Nova::PID::reset() {
     error = 0;
     output = 0;
 
-    timeSpentSettled = 0;
-    timeSpentRunning = 0;
+    startTime = -1;
+    done = false;
 }
 
 /**
@@ -158,20 +132,11 @@ void Nova::PID::setkConstants (
     this -> maxCumulativeError = maxCumulativeError;
 } 
 
-/**
- * @brief Setting the Exit Condition Constants
- * 
- * @param settleError 
- * @param settleTime 
- * @param timeout 
- */
 void Nova::PID::setExitConditionConstants (
         float settleError, 
-        float settleTime, 
-        float timeout
+        float settleTime
     ) {
 
     this -> settleError = settleError;
     this -> settleTime = settleTime;
-    this -> timeout = timeout;
 }
