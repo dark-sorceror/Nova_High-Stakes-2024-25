@@ -131,6 +131,8 @@ void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
     );
 
     this -> chassis.resetMotorEncoders();
+    float targetPosition = 0.0;
+    float currentPosition = 0.0;
 
     for (size_t i = 0; i < waypoints.size() - 1; ++i) {
         Point startPoint = waypoints[i];
@@ -144,10 +146,11 @@ void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
             curvature = calculateCurvature(waypoints[i - 1], startPoint, endPoint);
         }
 
-        float targetPosition = segementDistance * 46.28245103;
+        targetPosition += segementDistance;
 
-        while (fabs(Nova::backLeft.get_position() - targetPosition) > 10) {
-            float chassisError = targetPosition - Nova::backLeft.get_position();
+        currentPosition = Nova::backLeft.get_position() / 46.28245103;
+        while (fabs(targetPosition - currentPosition) > 10) {
+            float chassisError = targetPosition - currentPosition;
 
             float chassisOutput = chassisPID.compute(chassisError);
 
@@ -167,6 +170,8 @@ void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
 
             Nova::leftDrive.move(leftSpeed);
             Nova::rightDrive.move(rightSpeed);
+
+            currentPosition = Nova::backLeft.get_position() / 46.28245103;
 
             pros::delay(10);
         }

@@ -12,7 +12,7 @@
 namespace Nova {
     const std::string TEAM_NAME = "Nova";
     const std::string TEAM_NUMBER = "3388N";
-    const char *VERSION = "V1";
+    const char *VERSION = "V2";
 
     pros::Controller ctr(pros::E_CONTROLLER_MASTER);
 
