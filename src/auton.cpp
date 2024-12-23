@@ -62,11 +62,18 @@ void Nova::Auton::translate(float dist) {
     float targetAngle = this -> chassis.getIMURotation();
 
     while (!(chassisPID.isSettled())) {
-        float chassisError = targetPosition - ((Nova::backLeft.get_position() + Nova::backRight.get_position())/2);
+        float chassisError = targetPosition - 
+        (((Nova::backLeft.get_position() + Nova::backRight.get_position())/2)/44.07367655);
 
         float chassisOutput = chassisPID.compute(chassisError);
 
-        chassisPID.checkIfSettled(dist - (Nova::backLeft.get_position() / 46.28245103));
+        float angleError = this -> chassis.getIMURotation() - targetAngle;
+
+        float kIMU = 0.5;
+        float imuCorrection = kIMU * angleError;
+
+        chassisPID.checkIfSettled(targetPosition - 
+        (((Nova::backLeft.get_position() + Nova::backRight.get_position()) / 2) / 44.07367655));
 
         float chassisPower = chassisOutput > 120 ? 120 : (chassisOutput < -120 ? -120 : chassisOutput);
 
@@ -140,7 +147,7 @@ void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
         Point startPoint = waypoints[i];
         Point endPoint = waypoints[i + 1];
 
-        float segementDistance = distanceBetweenPoints(startPoint, endPoint);
+        float segmentDistance = distanceBetweenPoints(startPoint, endPoint);
 
         float curvature = 0.0f;
 
@@ -148,16 +155,21 @@ void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
             curvature = calculateCurvature(waypoints[i - 1], startPoint, endPoint);
         }
 
-        targetPosition += segementDistance;
+        targetPosition += segmentDistance;
 
         currentPosition = Nova::backLeft.get_position() / 46.28245103;
-        while (fabs(targetPosition - currentPosition) > 10) {
+
+        while (fabs(targetPosition - currentPosition) > 1) {
             float chassisError = targetPosition - currentPosition;
 
             float chassisOutput = chassisPID.compute(chassisError);
 
-            float leftSpeed = chassisOutput;
-            float rightSpeed = chassisOutput;
+            float maxPower = 120;
+            float distanceToTarget = fabs(targetPosition - currentPosition);
+            float powerScale = fmax(0.1, fmin(1.0, distanceToTarget / segmentDistance));
+
+            float leftSpeed = chassisOutput * powerScale;
+            float rightSpeed = chassisOutput * powerScale;
 
             if (curvature > 0) {
                 leftSpeed -= curvature * 50;
@@ -177,6 +189,8 @@ void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
 
             pros::delay(10);
         }
+
+        Nova::drive.brake();
 
         chassisPID.reset();
     }
