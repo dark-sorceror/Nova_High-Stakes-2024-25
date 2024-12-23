@@ -9,6 +9,7 @@
 #include "api.h"
 
 #include "pid.h"
+#include "kalmanFilter.h"
 
 Nova::PID::PID (
     float kP,
@@ -25,6 +26,14 @@ Nova::PID::PID (
     settleError(settleError),
     settleTime(settleTime)
 {};
+
+Nova::KalmanFilter kalmanFilter = Nova::KalmanFilter (
+    0.0,
+    1.0,
+    0.0,
+    0.01,
+    0.1
+);
 
 /**
  * @brief Compute the error Robot has from the target
@@ -57,12 +66,14 @@ float Nova::PID::compute(float error) {
     }
     */
 
+    float smoothedError = kalmanFilter.filter(error);
+
     float smoothedDeriv = alpha * deltaError + (1 - alpha) * prevDeriv;
 
-    output = kP * error + kI * accumulatedError + kD * smoothedDeriv;
+    output = kP * smoothedError + kI * accumulatedError + kD * smoothedDeriv;
 
-    prevError = error;
-    acceleration = futureError - prevDeriv;
+    prevError = smoothedError;
+    acceleration = smoothedError - prevDeriv;
     prevDeriv = smoothedDeriv; // futureError
 
     return output;

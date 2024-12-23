@@ -57,10 +57,12 @@ void Nova::Auton::translate(float dist) {
 
     this -> chassis.resetMotorEncoders();
 
-    float targetPosition = dist * 46.28245103; // dist * 300/2pir
+    float targetPosition = dist; // dist * 300/2pir
+
+    float targetAngle = this -> chassis.getIMURotation();
 
     while (!(chassisPID.isSettled())) {
-        float chassisError = targetPosition - Nova::backLeft.get_position();
+        float chassisError = targetPosition - ((Nova::backLeft.get_position() + Nova::backRight.get_position())/2);
 
         float chassisOutput = chassisPID.compute(chassisError);
 

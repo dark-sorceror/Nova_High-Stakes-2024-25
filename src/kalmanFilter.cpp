@@ -1,0 +1,32 @@
+/**
+ * \file kalmanFilter.cpp
+ * \brief 
+ * 
+ * Updated \date 2024-12-22
+ */
+
+#include "kalmanFilter.h"
+
+Nova::KalmanFilter::KalmanFilter (
+    float kalmanState,
+    float kalmanCovariance,
+    float kalmanGain,
+    float kalmanProcessNoise,
+    float kalmanMeasurementNoise
+):
+    kalmanState(kalmanState),
+    kalmanCovariance(kalmanCovariance),
+    kalmanGain(kalmanGain),
+    kalmanProcessNoise(kalmanProcessNoise),
+    kalmanMeasurementNoise(kalmanMeasurementNoise)
+{};
+
+float Nova::KalmanFilter::filter(float measurement) {
+    kalmanCovariance += kalmanProcessNoise;
+
+    kalmanGain = kalmanCovariance / (kalmanCovariance + kalmanMeasurementNoise);
+    kalmanState += kalmanGain * (measurement - kalmanState);
+    kalmanCovariance = (1 - kalmanGain) * kalmanCovariance;
+
+    return kalmanState;
+};

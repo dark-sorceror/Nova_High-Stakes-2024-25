@@ -65,6 +65,8 @@ namespace Nova {
              */
             void run();
 
+            void translate(float dist);
+
         private:
             /**
              * @brief Logarthmic drive
