@@ -40,6 +40,10 @@ Nova::Auton::Auton(
     clamp(clamp) 
 {};
 
+int sgn(float value) { 
+    return value < 0 ? -1 : 1; 
+}
+
 /**
  * @brief Translate the Robot in x or y directions
  *
@@ -47,11 +51,11 @@ Nova::Auton::Auton(
  */
 void Nova::Auton::translate(float dist) {
     Nova::PID chassisPID = Nova::PID(
-        1,  // kp
-        0,  // ki
-        12, // kd
-        10, // max cumulative error inches
-        5,  // settle error inchjes
+        5.75, // kp
+        4,  // ki
+        55, // kd increasing this will make more smooth
+        0, // max cumulative error inches
+        10,  // settle error inchjes
         100 // settle time MILLIS
     );
 
@@ -61,27 +65,40 @@ void Nova::Auton::translate(float dist) {
 
     float targetAngle = this -> chassis.getIMURotation();
 
+    float kIMU = 5;
+    float angleError = 0.0;
+    float imuCorrection = 0.0;
+    float chassisPower = 0.0;
+
     while (!(chassisPID.isSettled())) {
         float chassisError = targetPosition - 
         (((Nova::backLeft.get_position() + Nova::backRight.get_position())/2)/44.07367655);
 
-        float chassisOutput = chassisPID.compute(chassisError);
+        float chassisOutput = chassisPID.compute(chassisError, true);
 
-        float angleError = this -> chassis.getIMURotation() - targetAngle;
+        angleError = targetAngle - this -> chassis.getIMURotation();
 
-        float kIMU = 0.5;
-        float imuCorrection = kIMU * angleError;
+        imuCorrection = kIMU * angleError;
 
         chassisPID.checkIfSettled(targetPosition - 
         (((Nova::backLeft.get_position() + Nova::backRight.get_position()) / 2) / 44.07367655));
 
-        float chassisPower = chassisOutput > 120 ? 120 : (chassisOutput < -120 ? -120 : chassisOutput);
+        chassisPower = chassisOutput > 120 ? 120 : (chassisOutput < -120 ? -120 : chassisOutput);
 
-        Nova::leftDrive.move(chassisPower);
-        Nova::rightDrive.move(chassisPower);
+        //ctr.print(0, 0, "%0.2f", this -> chassis.getIMURotation());
+
+        if (dist > 0.0) {
+            Nova::leftDrive.move((chassisPower + imuCorrection) * 0.985);
+            Nova::rightDrive.move((chassisPower - imuCorrection) * 1.015);
+        } else {
+            Nova::leftDrive.move((chassisPower + imuCorrection) * 0.935);
+            Nova::rightDrive.move((chassisPower - imuCorrection) * 0.935);
+        }
 
         pros::delay(10);
     }
+
+    drive.brake();
 
     chassisPID.reset();
 
@@ -90,12 +107,12 @@ void Nova::Auton::translate(float dist) {
 
 void Nova::Auton::rotate(float angle) {
     Nova::PID turnPID = Nova::PID(
-        1,   // kp
-        0,   // ki
-        0,   // kd
-        110, // max cumulative error degrees
-        10,  // settle error degrees
-        100  // settle time MILLIS
+        2,  // kp
+        4,  // ki
+        7, // kd
+        0, // max cumulative error inches
+        5,  // settle error inchjes
+        200 // settle time MILLIS
     );
 
     float targetPosition = this -> chassis.getIMURotation() + angle;
@@ -103,7 +120,9 @@ void Nova::Auton::rotate(float angle) {
     while (!(turnPID.isSettled())) {
         float error = targetPosition - this -> chassis.getIMURotation();
 
-        float power = turnPID.compute(error);
+        float power = turnPID.compute(error, false);
+
+        Nova::ctr.print(0, 0, "%0.2f", error);
 
         turnPID.checkIfSettled(error);
 
@@ -114,6 +133,8 @@ void Nova::Auton::rotate(float angle) {
 
         pros::delay(10);
     }
+
+    drive.brake();
 
     turnPID.reset();
 }
@@ -131,11 +152,11 @@ float calculateCurvature(const Point &prev, const Point &curr, const Point &next
 
 void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
     Nova::PID chassisPID = Nova::PID(
-        1,  // kp
-        0,  // ki
-        12, // kd
-        10, // max cumulative error inches
-        5,  // settle error inchjes
+        7,  // kp
+        4,  // ki
+        50, // kd
+        0, // max cumulative error inches
+        8,  // settle error inchjes
         100 // settle time MILLIS
     );
 
@@ -159,10 +180,10 @@ void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
 
         currentPosition = Nova::backLeft.get_position() / 46.28245103;
 
-        while (fabs(targetPosition - currentPosition) > 1) {
+        while (fabs(targetPosition - currentPosition) > 30) {
             float chassisError = targetPosition - currentPosition;
 
-            float chassisOutput = chassisPID.compute(chassisError);
+            float chassisOutput = chassisPID.compute(chassisError, false);
 
             float maxPower = 120;
             float distanceToTarget = fabs(targetPosition - currentPosition);
@@ -199,12 +220,20 @@ void Nova::Auton::followPath(const std::vector<Point> &waypoints) {
 void Nova::Auton::blue1Elims() {
     std::vector<Point> waypoints = {
         {0.0, 0.0},   // Start point
-        {10.0, 0.0},  // Waypoint 1
-        {15.0, 5.0},  // Waypoint 2 (curved segment)
-        {20.0, 0.0},  // Waypoint 3
-        {30.0, -5.0}, // Waypoint 4 (curved segment)
-        {40.0, 0.0}   // End point
+        {0.0, 72.0},  // Waypoint 1
+        {-24.0, 72.0},  // Waypoint 2 (curved segment)
+        {0.0, 72.0},  // Waypoint 3
+        {0.0, 0.0} // Waypoint 4 (curved segment)
     };
 
-    this -> followPath(waypoints);
+    this -> translate(96);
+    this -> rotate(-90);
+    this -> translate(96);
+    this -> rotate(-90);
+    this -> translate(96);
+    this -> rotate(-90);
+    this -> translate(96);
+    this -> rotate(-90);
+    
+    //this -> followPath(waypoints);
 }

@@ -20,7 +20,7 @@ namespace Nova {
                 float settleTime
             );
 
-            float compute(float error);
+            float compute(float error, bool useKalman);
 
             bool isSettled();
 

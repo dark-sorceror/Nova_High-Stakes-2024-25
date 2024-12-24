@@ -59,7 +59,9 @@ void competition_initialize() {
  * 
  */
 void autonomous() {
-    auton.blue1Elims();
+    if (!Nova::imu1.is_calibrating() && !Nova::imu2.is_calibrating()) {
+        auton.blue1Elims();
+    }
 }
 
 /**
@@ -77,7 +79,7 @@ void opcontrol() {
 
         doinker.run();
 
-        Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
+        //Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
 
         pros::delay(10);
     }

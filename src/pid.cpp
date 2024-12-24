@@ -41,7 +41,7 @@ Nova::KalmanFilter kalmanFilter = Nova::KalmanFilter (
  * @param error 
  * @return float 
  */
-float Nova::PID::compute(float error) {
+float Nova::PID::compute(float error, bool useKalman) {
     float deltaError = error - prevError;
 
     if (fabs(error) < maxCumulativeError) {
@@ -66,7 +66,7 @@ float Nova::PID::compute(float error) {
     }
     */
 
-    float smoothedError = kalmanFilter.filter(error);
+    float smoothedError = useKalman ? kalmanFilter.filter(error) : error;
 
     float smoothedDeriv = alpha * deltaError + (1 - alpha) * prevDeriv;
 
