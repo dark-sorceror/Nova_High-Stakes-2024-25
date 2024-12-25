@@ -58,7 +58,8 @@ void Nova::Auton::translate(float dist) {
         10,  // settle error inchjes
         100 // settle time MILLIS
     );
-
+    // 2pir * rpm  * 1m = distance
+    // ticks / (300 / 2pir) = inches travelled
     this -> chassis.resetMotorEncoders();
 
     float targetPosition = dist; // dist * 300/2pir
@@ -76,7 +77,9 @@ void Nova::Auton::translate(float dist) {
 
         float chassisOutput = chassisPID.compute(chassisError, true);
 
-        angleError = targetAngle - this -> chassis.getIMURotation();
+        float currentOrientation = this -> chassis.getIMURotation();
+
+        angleError = fabs(targetAngle - currentOrientation) * -sgn(currentOrientation);
 
         imuCorrection = kIMU * angleError;
 
@@ -226,14 +229,13 @@ void Nova::Auton::blue1Elims() {
         {0.0, 0.0} // Waypoint 4 (curved segment)
     };
 
+    Nova::clamp.set_value(true);
+    Nova::intake.move_voltage(12000);
+    pros::delay(500);
     this -> translate(96);
-    this -> rotate(-90);
+    this -> rotate(90);
     this -> translate(96);
-    this -> rotate(-90);
-    this -> translate(96);
-    this -> rotate(-90);
-    this -> translate(96);
-    this -> rotate(-90);
+    Nova::clamp.set_value(false);
     
     //this -> followPath(waypoints);
 }

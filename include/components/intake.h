@@ -13,6 +13,8 @@ namespace Nova {
         public:
             void initialize();
 
+            void spinFor(int seconds);
+
             void run();
     };
 } // namespace Nova

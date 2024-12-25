@@ -11,6 +11,9 @@
 namespace Nova {
     class Clamp {
         public:
+            void lock();
+            void unlock();
+
             void run();
     };
 } // namespace Nova

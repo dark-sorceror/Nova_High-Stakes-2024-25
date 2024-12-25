@@ -20,6 +20,12 @@ void Nova::Intake::initialize() {
     optical.set_led_pwm(75);
 }
 
+void Nova::Intake::spinFor(int seconds) {
+    float targetPosition = 3000 * seconds; // in ticks 
+
+    Nova::intake.move_absolute(-targetPosition, 127);
+}
+
 /**
  * @brief Run Intake
  * 

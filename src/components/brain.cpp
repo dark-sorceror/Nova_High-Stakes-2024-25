@@ -630,7 +630,10 @@ static void testing_screen(void) {
 void Nova::Brain::initialize(void) {
     lv_init();
 
-    home_screen();
+    logo_screen();
+    lv_scr_load(s_logo_screen);
 
-    lv_scr_load(s_home_screen);
+    //home_screen();
+
+    //lv_scr_load(s_home_screen);
 }

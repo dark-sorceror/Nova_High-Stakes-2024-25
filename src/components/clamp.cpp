@@ -13,6 +13,14 @@
 
 bool clampToggle = false;
 
+void Nova::Clamp::lock() {
+    Nova::clamp.set_value(1);
+}
+
+void Nova::Clamp::unlock() {
+    Nova::clamp.set_value(0);
+}
+
 /**
  * @brief Run clamp
  *

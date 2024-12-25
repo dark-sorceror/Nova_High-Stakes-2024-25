@@ -53,8 +53,8 @@ namespace Nova {
 
     pros::Motor intake(6);
 
-    pros::adi::Pneumatics clamp('A', LOW);
-    pros::adi::Pneumatics doinker('B', LOW);
+    pros::adi::Pneumatics clamp('A', true, true);
+    //pros::adi::Pneumatics doinker('B', true, false);
 
     pros::Optical optical(5);
 

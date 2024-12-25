@@ -23,7 +23,7 @@
 #include "api.h"
 
 // libNova
-//#include "components/brain.h"
+#include "components/brain.h"
 
 #include "globals.h"
 
