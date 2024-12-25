@@ -2,9 +2,8 @@
  * \file doinker.cpp
  *
  * \brief Contains doinker logic
- *
- * Updated - 11/30/2024
- * Last Successful Test - 11/30/2024
+ * 
+ * \date Updated - 12/25/2024
  */
 
 #include "globals.h"
@@ -12,6 +11,14 @@
 #include "components/doinker.h"
 
 bool donkerToggle = false;
+
+void Nova::Doinker::up() {
+    Nova::clamp.set_value(0);
+}
+
+void Nova::Doinker::down() {
+    Nova::clamp.set_value(1);
+}
 
 /**
  * @brief Run doinker

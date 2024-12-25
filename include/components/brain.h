@@ -1,10 +1,9 @@
 /**
  * \file brain.h
  *
- * \brief Contains brain definitions for brain.cpp
+ * \brief Contains definitions for brain.cpp
  * 
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \date Updated - 12/25/2024
  */
 
 #ifndef _BRAIN_H_

@@ -1,16 +1,26 @@
 /**
- * \file utils.h
+ * \file utility.h
  *
- * \brief Contains miscellaneous functions
+ * \brief Contains definitions for utility.cpp
  * 
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \date Updated - 12/25/2024
  */
 
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
 #include "api.h"
+
+#include <numeric>
+
+/*
+1800 ticks/rev with 36:1 gears red
+900 ticks/rev with 18:1 gears green
+300 ticks/rev with 6:1 gears blue
+
+144 inches x 144 inches field
+omni wheel circumference =  2pi 3.25 inch = 20.42 inches / rev
+*/
 
 /**
  * @brief Get the sign of a value
@@ -21,6 +31,15 @@
  */
 template <typename T> constexpr T sgn(T value) { 
     return value < 0 ? -1 : 1; 
+}
+
+constexpr double average(const std::vector<double>& vec) {
+    if (vec.empty()) {
+        return 0.0;
+    }
+
+    double sum = std::accumulate(vec.begin(), vec.end(), 0.0);
+    return sum / vec.size();
 }
 
 /**

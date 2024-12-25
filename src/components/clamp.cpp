@@ -2,9 +2,8 @@
  * \file clamp.cpp
  *
  * \brief Contains clamp logic
- *
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * 
+ * \date Updated - 12/25/2024
  */
 
 #include "globals.h"

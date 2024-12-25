@@ -1,10 +1,9 @@
 /**
  * \file odom.h
  *
- * \brief Contains odometry definitions for odom.cpp
+ * \brief Contains definitions for odom.cpp
  * 
- * Updated - 11/30/2024
- * Last Successful Test - 11/30/2024
+ * \date Updated - 12/25/2024
  */
 
 #ifndef _ODOM_H_

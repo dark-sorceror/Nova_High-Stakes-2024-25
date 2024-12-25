@@ -1,10 +1,9 @@
 /**
  * \file pose.h
  *
- * \brief Contains pose object definitions for pose.cpp
+ * \brief Contains definitions for pose.cpp
  * 
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \date Updated - 12/25/2024
  */
 
 #ifndef _POSE_H_

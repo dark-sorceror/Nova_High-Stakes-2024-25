@@ -1,10 +1,9 @@
 /**
  * \file globals.h
  *
- * \brief Contains global system definitions for globals.cpp
+ * \brief Contains definitions for globals.cpp
  * 
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \date Updated - 12/25/2024
  */
 
 #ifndef _GLOBALS_H_
@@ -21,6 +20,9 @@ namespace Nova {
     extern pros::v5::Controller ctr;
 
     // Chassis
+    extern const float wheelDiameter;
+    extern const int driveRPM;
+
     extern pros::v5::Motor frontLeft;
     extern pros::v5::Motor middleLeft;
     extern pros::v5::Motor backLeft;
@@ -32,13 +34,13 @@ namespace Nova {
     extern pros::v5::MotorGroup rightDrive;
     extern pros::v5::MotorGroup drive;
 
-    // Subsystems
+    // Components
     extern pros::v5::Motor intake;
 
     extern pros::adi::Pneumatics clamp;
     extern pros::adi::Pneumatics doinker;
 
-    // Auton dependent
+    // Auton Dependent
     extern pros::v5::Imu imu1;
     extern pros::v5::Imu imu2;
 

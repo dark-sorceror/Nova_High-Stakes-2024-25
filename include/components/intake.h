@@ -1,9 +1,10 @@
 /**
  * \file intake.h
  *
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
- */ 
+ * \brief Contains definitions for intake.cpp
+ * 
+ * \date Updated - 12/25/2024
+ */
 
 #ifndef _INTAKE_H_
 #define _INTAKE_H_
@@ -12,9 +13,8 @@ namespace Nova {
     class Intake {
         public:
             void initialize();
-
-            void spinFor(int seconds);
-
+            void start();
+            void stop();
             void run();
     };
 } // namespace Nova

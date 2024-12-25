@@ -1,10 +1,9 @@
 /**
  * \file odom.cpp
  *
- * \brief Contains odom (tracking algorithm) logic
+ * \brief Contains odometry (tracking algorithm) logic
  * 
- * Updated - 11/30/2024
- * Last Successful Test - 11/30/2024
+ * \date Updated - 12/25/2024
  */
 
 #include <cmath>

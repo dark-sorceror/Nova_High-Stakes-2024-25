@@ -1,10 +1,9 @@
 /**
- * \file pose.cpp
+ * \file clamp.cpp
  *
  * \brief Contains position operations and logic
  * 
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \date Updated - 12/25/2024
  */
 
 #include <cmath>

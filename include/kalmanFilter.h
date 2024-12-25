@@ -1,9 +1,9 @@
 /**
- * @file kalmanFilter.h
+ * \file kalmanFilter.h
+ *
+ * \brief Contains definitions for kalmanFilter.cpp
  * 
- * @brief 
- * 
- * Updated @date 2024-12-22
+ * \date Updated - 12/25/2024
  */
 
 #ifndef _KALMANFILTER_H_

@@ -3,8 +3,7 @@
  *
  * \brief Contains intake logic
  * 
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \date Updated - 12/25/2024
  */
 
 #include "globals.h"
@@ -20,10 +19,12 @@ void Nova::Intake::initialize() {
     optical.set_led_pwm(75);
 }
 
-void Nova::Intake::spinFor(int seconds) {
-    float targetPosition = 3000 * seconds; // in ticks 
+void Nova::Intake::start() {
+    Nova::intake.move_voltage(-12000);
+}
 
-    Nova::intake.move_absolute(-targetPosition, 127);
+void Nova::Intake::stop() {
+    Nova::intake.move_voltage(0);
 }
 
 /**

@@ -3,8 +3,7 @@
  *
  * \brief Contains variables for ports
  * 
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \date Updated - 12/25/2024
  */
 
 #include "api.h"
@@ -15,6 +14,9 @@ namespace Nova {
     const char *VERSION = "V2";
 
     pros::Controller ctr(pros::E_CONTROLLER_MASTER);
+
+    const float wheelDiameter = 3.25;
+    const int driveRPM = 450;
 
     pros::Motor frontLeft(-8, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
     pros::Motor middleLeft(-9, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
@@ -54,7 +56,7 @@ namespace Nova {
     pros::Motor intake(6);
 
     pros::adi::Pneumatics clamp('A', true, true);
-    //pros::adi::Pneumatics doinker('B', true, false);
+    pros::adi::Pneumatics doinker('B', true, false);
 
     pros::Optical optical(5);
 

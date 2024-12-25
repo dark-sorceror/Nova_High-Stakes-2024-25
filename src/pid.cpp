@@ -1,9 +1,10 @@
 /**
- * \file PID.cpp
+ * \file pid.cpp
  *
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
- */ 
+ * \brief Contains PID Controller loop functions
+ * 
+ * \date Updated - 12/25/2024
+ */
 
 #include <cmath>
 #include "api.h"

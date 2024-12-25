@@ -1,8 +1,9 @@
 /**
  * \file kalmanFilter.cpp
- * \brief 
+ *
+ * \brief Contains kalman filtering function
  * 
- * Updated \date 2024-12-22
+ * \date Updated - 12/25/2024
  */
 
 #include "kalmanFilter.h"

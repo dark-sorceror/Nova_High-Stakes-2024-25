@@ -3,8 +3,7 @@
  *
  * \brief Contains lvgl implementation for auton planner logic on brain
  * 
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \date Updated - 12/25/2024
  */
 
 #include "liblvgl/lvgl.h"
@@ -344,7 +343,7 @@ static void btn_event_handler(lv_event_t * e) {
  * @brief Home screen
  * 
  */
-static void home_screen(void) {
+void home_screen(void) {
     s_home_screen = lv_obj_create(NULL);
 
     lv_obj_set_style_bg_color(s_home_screen, lv_color_hex(0), LV_PART_MAIN);
@@ -362,7 +361,7 @@ static void home_screen(void) {
  * @brief Logo screen
  * 
  */
-static void logo_screen(void) {
+void logo_screen(void) {
     s_logo_screen = lv_obj_create(NULL);
 
     image(s_logo_screen, &logo, LV_ALIGN_CENTER, {0, 0});
@@ -374,7 +373,7 @@ static void logo_screen(void) {
  * @brief Match screen
  * 
  */
-static void match_screen(void) {
+void match_screen(void) {
     s_match_screen = lv_obj_create(NULL);
 
     lv_obj_set_style_bg_color(s_match_screen, lv_color_hex(0), LV_PART_MAIN);
@@ -438,7 +437,7 @@ static void match_screen(void) {
  * @brief Robot screen
  * 
  */
-static void robot_screen(void) {
+void robot_screen(void) {
     s_robot_screen = lv_obj_create(NULL);
 
     lv_obj_set_style_bg_color(s_robot_screen, lv_color_hex(0), LV_PART_MAIN);
@@ -532,7 +531,7 @@ static void robot_screen(void) {
  * @brief Testing screen
  * 
  */
-static void testing_screen(void) {
+void testing_screen(void) {
     s_testing_screen = lv_obj_create(NULL);
 
     lv_obj_set_style_bg_color(s_testing_screen, lv_color_hex(0), LV_PART_MAIN);

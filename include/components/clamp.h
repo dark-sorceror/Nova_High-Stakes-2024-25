@@ -1,8 +1,9 @@
 /**
  * \file clamp.h
  *
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \brief Contains definitions for clamp.cpp
+ * 
+ * \date Updated - 12/25/2024
  */ 
 
 #ifndef _CLAMP_H_
@@ -13,7 +14,6 @@ namespace Nova {
         public:
             void lock();
             void unlock();
-
             void run();
     };
 } // namespace Nova

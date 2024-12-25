@@ -29,7 +29,7 @@
 
 #include "pose.h"
 #include "pid.h"
-//#include "utils.h"
+#include "utils.h"
 #include "auton.h"
 
 #include "components/chassis/chassis.h"

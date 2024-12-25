@@ -1,14 +1,19 @@
 /**
  * \file chassis.h
  *
- * \brief Contains drive definitions for chassis.cpp
- *
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \brief Contains definitions for chassis.cpp
+ * 
+ * \date Updated - 12/25/2024
  */
 
 #ifndef _CHASSIS_H_
 #define _CHASSIS_H_
+
+struct Point {
+    float x;
+    float y;
+};
+
 
 namespace Nova {
     class Chassis {
@@ -39,13 +44,37 @@ namespace Nova {
              * @return float 
              */
             float getIMURotation();
-            
+
             /**
-             * @brief Reset motor encoders of chassis
+             * @brief Translate the Robot in x or y directions
+             * 
+             * @param dist 
+             */
+            void translate(float dist);
+
+            /**
+             * @brief Rotate the Robot in 360 degree directions relative to itself
+             * 
+             * @param angle 
+             */
+            void rotate(float angle);
+
+            /**
+             * @brief Rotate the Robot in 360 degree directions with 90 as North
+             * 
+             * @param angle 
+             */
+            void rotateAbsolute(float angle);
+
+            void followPath(const std::vector<Point> &waypoints);
+
+            /**
+             * @brief Run chassis
              * 
              */
-            void resetMotorEncoders();
+            void run();
 
+        private:
             /**
              * @brief Set the Brake Mode object
              * 
@@ -54,20 +83,13 @@ namespace Nova {
             void setBrakeMode(pros::motor_brake_mode_e_t brakeMode);
 
             /**
-             * @brief Calibrate chassis
+             * @brief Reset motor encoders of chassis
              * 
              */
-            void calibrate();
+            void resetMotorEncoders();
 
-            /**
-             * @brief Run chassis
-             * 
-             */
-            void run();
+            void resetIMUs();
 
-            void translate(float dist);
-
-        private:
             /**
              * @brief Logarthmic drive
              *
