@@ -42,6 +42,9 @@ constexpr double average(const std::vector<double>& vec) {
     return sum / vec.size();
 }
 
+float ticksToInches(float ticks);
+float inchesToTicks(float inches);
+
 /**
  * @brief Calculate average of a vector
  * 

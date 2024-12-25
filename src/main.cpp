@@ -3,8 +3,7 @@
  *
  * \brief Main file
  * 
- * Updated - 12/15/2024
- * Last Successful Test - 12/15/2024
+ * \date Updated - 12/25/2024
  */
 
 #include "main.h"
@@ -16,6 +15,7 @@ Nova::Chassis chassis = Nova::Chassis();
 Nova::Intake intake = Nova::Intake();
 
 Nova::Clamp clamp = Nova::Clamp();
+
 Nova::Auton auton = Nova::Auton(chassis, intake, clamp);
 
 /**
@@ -25,11 +25,7 @@ Nova::Auton auton = Nova::Auton(chassis, intake, clamp);
 void initialize() {
     //pros::lcd::initialize();
     brain.initialize();
-
     chassis.initialize();
-    Nova::imu1.reset();
-    Nova::imu2.reset();
-
     intake.initialize();
 }
 
@@ -41,11 +37,7 @@ void disabled() {}
  */
 void competition_initialize() {
     brain.initialize();
-
     chassis.initialize();
-    Nova::imu1.reset();
-    Nova::imu2.reset();
-
     intake.initialize();
 
     autonomous();
@@ -57,7 +49,7 @@ void competition_initialize() {
  */
 void autonomous() {
     if (!Nova::imu1.is_calibrating() && !Nova::imu2.is_calibrating()) {
-        auton.blue1Elims();
+        auton.test();
     }
 }
 
@@ -70,7 +62,6 @@ void opcontrol() {
         //Nova::update(); // tracking algorithm loop
 
         chassis.run();
-
         intake.run();
         clamp.run();
 

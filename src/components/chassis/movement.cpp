@@ -51,8 +51,7 @@ void Nova::Chassis::translate(float dist) {
     float chassisPower = 0.0;
 
     while (!(chassisPID.isSettled())) {
-        float chassisError = targetPosition - 
-        (((Nova::backLeft.get_position() + Nova::backRight.get_position())/2) / 44.07367655);
+        float chassisError = targetPosition - ticksToInches((Nova::backLeft.get_position() + Nova::backRight.get_position()) / 2);
 
         float chassisOutput = chassisPID.compute(chassisError, true);
 
@@ -62,8 +61,7 @@ void Nova::Chassis::translate(float dist) {
 
         imuCorrection = kIMU * angleError;
 
-        chassisPID.checkIfSettled(targetPosition - 
-        (((Nova::backLeft.get_position() + Nova::backRight.get_position()) / 2) / 44.07367655));
+        chassisPID.checkIfSettled(targetPosition - ticksToInches((Nova::backLeft.get_position() + Nova::backRight.get_position()) / 2));
 
         chassisPower = chassisOutput > 120 ? 120 : (chassisOutput < -120 ? -120 : chassisOutput);
 

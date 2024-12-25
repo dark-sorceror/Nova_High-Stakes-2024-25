@@ -2,7 +2,7 @@
 
 #include "utils.h"
 
-float inchesToTicks(float value) {
+float inchesToTicks(float inches) {
     // Formula: Number of ticks in one inch = drive RPM / circumference of drive wheel
     return (Nova::driveRPM / (M_PI * Nova::wheelDiameter));
 }
