@@ -3,11 +3,13 @@
  *
  * \brief Contains definitions for intake.cpp
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
 #ifndef _INTAKE_H_
 #define _INTAKE_H_
+
+#include "globals.h"
 
 namespace Nova {
     class Intake {

@@ -3,13 +3,10 @@
  *
  * \brief Contains Chassis logic in user control and initialization
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
-#include "globals.h"
-#include "utils.h"
-
-#include "components/chassis/chassis.h"
+#include "components/chassis.h"
 
 /**
  * @brief Initialize Chassis

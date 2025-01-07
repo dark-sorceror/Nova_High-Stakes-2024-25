@@ -3,14 +3,10 @@
  *
  * \brief Contains PID Controller loop functions
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
-#include <cmath>
-#include "api.h"
-
 #include "pid.h"
-#include "kalmanFilter.h"
 
 Nova::PID::PID (
     float kP,

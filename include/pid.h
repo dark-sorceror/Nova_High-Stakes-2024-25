@@ -3,11 +3,17 @@
  *
  * \brief Contains definitions for pid.cpp
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
 #ifndef _PID_H_
 #define _PID_H_
+
+#include <cmath>
+
+#include "api.h"
+
+#include "kalmanFilter.h"
 
 namespace Nova {
     class PID {

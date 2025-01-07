@@ -3,7 +3,7 @@
  *
  * \brief Main file
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
 #include "main.h"
@@ -23,7 +23,8 @@ Nova::Auton auton = Nova::Auton(chassis, intake, clamp);
  * 
  */
 void initialize() {
-    //pros::lcd::initialize();
+    pros::lcd::initialize();
+    
     brain.initialize();
     chassis.initialize();
     intake.initialize();
@@ -39,8 +40,6 @@ void competition_initialize() {
     brain.initialize();
     chassis.initialize();
     intake.initialize();
-
-    autonomous();
 }
 
 /**
@@ -59,7 +58,7 @@ void autonomous() {
  */
 void opcontrol() {
     while (true) {
-        //Nova::update(); // tracking algorithm loop
+        chassis.updatePosition(); // tracking algorithm loop
 
         chassis.run();
         intake.run();

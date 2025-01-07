@@ -3,11 +3,13 @@
  *
  * \brief Contains definitions for doinker.cpp
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
 #ifndef _DOINKER_H_
 #define _DOINKER_H_
+
+#include "globals.h"
 
 namespace Nova {
     class Doinker {

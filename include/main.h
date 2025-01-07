@@ -30,14 +30,14 @@
 #include "pose.h"
 #include "pid.h"
 #include "utils.h"
-#include "auton.h"
 
-#include "components/chassis/chassis.h"
-#include "components/chassis/odom.h"
+#include "components/chassis.h"
 
 #include "components/intake.h"
 #include "components/clamp.h"
 #include "components/doinker.h"
+
+#include "auton.h"
 
 #ifdef __cplusplus
 extern "C" {

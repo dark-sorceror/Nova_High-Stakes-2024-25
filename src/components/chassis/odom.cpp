@@ -3,78 +3,18 @@
  *
  * \brief Contains odometry (tracking algorithm) logic
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
-#include <cmath>
+#include "components/chassis.h"
 
-#include "globals.h"
-
-#include "odom.h"
-#include "pose.h"
-
-Nova::Pose odomPose(0, 0, 0);
-Nova::Pose odomSpeed(0, 0, 0);
-Nova::Pose odomLocalSpeed(0, 0, 0);
+Nova::Pose currentPosition(0, 0, 0);
 
 float prevVertical = 0;
 float prevVertical1 = 0;
 float prevHorizontal = 0;
 float prevHorizontal1 = 0;
 float prevImu = 0;
-
-/**
- * @brief Convert from degree to radians
- *
- * @param value
- * @return float
- */
-extern float degToRad(float value) {
-    return value * M_PI / 180;
-}
-
-/**
- * @brief Convert from radians to degrees
- *
- * @param value
- * @return float
- */
-extern float radToDeg(float value) {
-    return value * 180 / M_PI;
-}
-
-/**
- * @brief Get position of Pose object
- * 
- * @param radians 
- * @return Nova::Pose 
- */
-Nova::Pose Nova::getPose(bool radians) {
-    if (radians) return odomPose;
-    else return Nova::Pose(odomPose.x, odomPose.y, radToDeg(odomPose.theta));
-}
-
-/**
- * @brief Set position of Pose object
- * 
- * @param pose 
- * @param radians 
- */
-void Nova::setPose(Nova::Pose pose, bool radians) {
-    if (radians) odomPose = pose;
-    else odomPose = Nova::Pose(pose.x, pose.y, degToRad(pose.theta));
-}
-
-/**
- * @brief Get the Vertical Distance Traveled object
- * 
- * @return float 
- */
-float getVerticalDistanceTraveled() {
-    return ((Nova::backLeft.get_position() + Nova::backRight.get_position() + \
-            Nova::middleLeft.get_position() + Nova::middleRight.get_position() + \
-            Nova::frontLeft.get_position() + Nova::frontRight.get_position()) / 6) * 3.25 * M_PI * (450 / 600);
-}
 
 /**
  * @brief Get the Horizontal Distance Traveled object
@@ -86,10 +26,32 @@ float getHorizontalDistanceTraveled() {
 }
 
 /**
+ * @brief Get position of Pose object
+ * 
+ * @param radians 
+ * @return Nova::Pose 
+ */
+Nova::Pose Nova::Chassis::getCurrentPosition(bool radians) {
+    if (radians) return currentPosition;
+    else return Nova::Pose(currentPosition.x, currentPosition.y, radToDeg(currentPosition.theta));
+}
+
+/**
+ * @brief Set position of Pose object
+ * 
+ * @param pose 
+ * @param radians 
+ */
+void Nova::Chassis::setPosition(Nova::Pose pose, bool radians) {
+    if (radians) currentPosition = pose;
+    else currentPosition = Nova::Pose(pose.x, pose.y, degToRad(pose.theta));
+}
+
+/**
  * @brief Tracking Algorithm Loop
  * 
  */
-void Nova::update() {
+void Nova::Chassis::updatePosition() {
     float imuRaw = 0;
 
     imuRaw = degToRad((Nova::imu1.get_rotation() + Nova::imu2.get_rotation()) / 2);
@@ -98,12 +60,12 @@ void Nova::update() {
 
     prevImu = imuRaw;
  
-    float heading = odomPose.theta;
+    float heading = currentPosition.theta;
     
     heading += deltaImu;
 
-    float deltaHeading = heading - odomPose.theta;
-    float avgHeading = odomPose.theta + deltaHeading / 2;
+    float deltaHeading = heading - currentPosition.theta;
+    float avgHeading = currentPosition.theta + deltaHeading / 2;
 
     float rawVertical = 0;
     float rawHorizontal = 0;
@@ -130,14 +92,14 @@ void Nova::update() {
         localY = 2 * sin(deltaHeading / 2) * (deltaY / deltaHeading + verticalOffset);
     }
 
-    Nova::Pose prevPose = odomPose;
+    Nova::Pose prevPose = currentPosition;
 
-    odomPose.x += localY * sin(avgHeading);
-    odomPose.y += localY * cos(avgHeading);
-    odomPose.x += localX * -cos(avgHeading);
-    odomPose.y += localX * sin(avgHeading);
-    odomPose.theta = heading;
+    currentPosition.x += localY * sin(avgHeading);
+    currentPosition.y += localY * cos(avgHeading);
+    currentPosition.x += localX * -cos(avgHeading);
+    currentPosition.y += localX * sin(avgHeading);
+    currentPosition.theta = heading;
 
     // testing
-    pros::lcd::print(1, "x: %0.2f y: %0.2f theta: %0.2f", odomPose.x, odomPose.y, odomPose.theta);
+    pros::lcd::print(1, "x: %0.2f y: %0.2f theta: %0.2f", currentPosition.x, currentPosition.y, currentPosition.theta);
 }

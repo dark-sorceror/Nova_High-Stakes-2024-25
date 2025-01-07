@@ -3,17 +3,23 @@
  *
  * \brief Contains definitions for chassis.cpp
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
 #ifndef _CHASSIS_H_
 #define _CHASSIS_H_
 
+#include <cmath>
+
+#include "globals.h"
+#include "utils.h"
+#include "pose.h"
+#include "pid.h"
+
 struct Point {
     float x;
     float y;
 };
-
 
 namespace Nova {
     class Chassis {
@@ -46,6 +52,28 @@ namespace Nova {
             float getIMURotation();
 
             /**
+             * @brief Get the Pose object
+             * 
+             * @param radians 
+             * @return Pose 
+             */
+            Pose getCurrentPosition(bool radians = false);
+
+            /**
+             * @brief Set the Pose object
+             * 
+             * @param pose 
+             * @param radians 
+             */
+            void setPosition(Pose pose, bool radians = false);
+            
+            /**
+             * @brief Tracking Algorithm Loop
+             * 
+             */
+            void updatePosition();
+
+            /**
              * @brief Translate the Robot in x or y directions
              * 
              * @param dist 
@@ -65,8 +93,6 @@ namespace Nova {
              * @param angle 
              */
             void rotateAbsolute(float angle);
-
-            void followPath(const std::vector<Point> &waypoints);
 
             /**
              * @brief Run chassis

@@ -3,10 +3,8 @@
  *
  * \brief Contains intake logic
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
-
-#include "globals.h"
 
 #include "components/intake.h"
 

@@ -3,15 +3,32 @@
  *
  * \brief Contains definitions for auton.cpp
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
 #ifndef _AUTON_H_
 #define _AUTON_H_
 
-#include "components/chassis/chassis.h"
+#include "components/chassis.h"
 #include "components/intake.h"
 #include "components/clamp.h"
+
+/**
+ * @brief Construct a new Nova::Auton::Auton object
+ *
+ * @param chassis
+ * @param intake
+ * @param clamp
+ */
+Nova::Auton::Auton(
+    Nova::Chassis chassis,
+    Nova::Intake intake,
+    Nova::Clamp clamp
+): 
+    chassis(chassis),
+    intake(intake),
+    clamp(clamp) 
+{};
 
 namespace Nova {
     class Auton {
@@ -30,6 +47,7 @@ namespace Nova {
              * 
              */
             void test();
+            
         private:
             Chassis chassis;
             Intake intake;

@@ -3,11 +3,13 @@
  *
  * \brief Contains definitions for pose.cpp
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/6/2025
  */
 
 #ifndef _POSE_H_
 #define _POSE_H_
+
+#include <cmath>
 
 namespace Nova {
     class Pose {
