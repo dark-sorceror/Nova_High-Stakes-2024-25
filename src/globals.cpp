@@ -15,16 +15,16 @@ namespace Nova {
 
     pros::Controller ctr(pros::E_CONTROLLER_MASTER);
 
-    const float wheelDiameter = 3.25;
-    const int driveRPM = 450;
+    //const float wheelDiameter = 3.25;
+    //const int driveRPM = 450;
 
-    pros::Motor frontLeft(-8, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-    pros::Motor middleLeft(-9, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-    pros::Motor backLeft(10, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor frontLeft(-18, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor middleLeft(-20, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor backLeft(19, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
 
-    pros::Motor frontRight(1, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-    pros::Motor middleRight(2, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-    pros::Motor backRight(-3, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor frontRight(6, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor middleRight(7, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor backRight(-8, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
 
     pros::MotorGroup leftDrive(
         {
@@ -53,15 +53,20 @@ namespace Nova {
         }
     );
 
-    pros::Motor intake(6);
+    pros::Motor intake(5);
 
-    pros::adi::Pneumatics clamp('A', true, true);
-    pros::adi::Pneumatics doinker('B', true, false);
+    pros::adi::Pneumatics clamp('H', true, true);
+    pros::adi::Pneumatics raiseIntake('A', true, false);
+    pros::adi::Pneumatics doinker('B', false, false);
 
-    pros::Optical optical(5);
+    pros::Optical optical(4);
 
-    pros::Imu imu1(19);
-    pros::Imu imu2(20);
+    pros::Imu imu1(9);
+    pros::Imu imu2(10);
+
+    pros::Motor lb1(2);
+    pros::Motor lb2(3);
+    pros::Rotation lbCheck(1);
 
     pros::Rotation horizontalEncoder(2);
 } // namespace Nova

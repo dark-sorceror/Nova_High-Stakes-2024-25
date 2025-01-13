@@ -16,6 +16,8 @@ Nova::Intake intake = Nova::Intake();
 
 Nova::Clamp clamp = Nova::Clamp();
 
+Nova::Doinker doinker = Nova::Doinker();
+
 Nova::Auton auton = Nova::Auton(chassis, intake, clamp);
 
 /**
@@ -28,6 +30,8 @@ void initialize() {
     brain.initialize();
     chassis.initialize();
     intake.initialize();
+
+    Nova::lbCheck.reset();
 }
 
 void disabled() {}
@@ -47,9 +51,6 @@ void competition_initialize() {
  * 
  */
 void autonomous() {
-    if (!Nova::imu1.is_calibrating() && !Nova::imu2.is_calibrating()) {
-        auton.test();
-    }
 }
 
 /**
@@ -57,12 +58,14 @@ void autonomous() {
  * 
  */
 void opcontrol() {
+    Nova::lbCheck.reset();
+    Nova::lbCheck.reset_position();
     while (true) {
         chassis.updatePosition(); // tracking algorithm loop
-
         chassis.run();
         intake.run();
         clamp.run();
+        doinker.run();
 
         //Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
 

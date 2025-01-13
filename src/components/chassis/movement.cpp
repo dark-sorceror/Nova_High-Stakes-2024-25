@@ -6,6 +6,8 @@
  * \date Updated - 1/6/2025
  */
 
+#include "globals.h"
+
 #include "components/chassis.h"
 
 float distanceBetweenPoints(const Point &a, const Point &b) {
@@ -17,6 +19,28 @@ float calculateCurvature(const Point &prev, const Point &curr, const Point &next
     float angle2 = atan2(next.y - curr.y, next.x - curr.x);
 
     return (angle2 - angle1);
+}
+
+/**
+ * @brief Convert from inches to ticks
+ * 
+ * @param inches 
+ * @return float 
+ */
+float inchesToTicks(float inches) {
+    // Formula: Number of ticks in one inch = drive RPM / circumference of drive wheel
+    return inches * (450 / (M_PI * 3.25));
+}
+
+/**
+ * @brief Convert from ticks to inches
+ * 
+ * @param ticks 
+ * @return float 
+ */
+float ticksToInches(float ticks) {
+    // Formula: Number of inches in one tick = circumference of drive wheel / drive RPM
+    return ticks * ((M_PI * 3.25) / 450);
 }
 
 /**

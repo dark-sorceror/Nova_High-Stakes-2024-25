@@ -20,8 +20,8 @@ namespace Nova {
     extern pros::v5::Controller ctr;
 
     // Chassis
-    extern const float wheelDiameter;
-    extern const int driveRPM;
+    //extern const float wheelDiameter;
+    //extern const int driveRPM;
 
     extern pros::v5::Motor frontLeft;
     extern pros::v5::Motor middleLeft;
@@ -45,6 +45,10 @@ namespace Nova {
     extern pros::v5::Imu imu2;
 
     extern pros::v5::Optical optical;
+
+    extern pros::v5::Motor lb1;
+    extern pros::v5::Motor lb2;
+    extern pros::v5::Rotation lbCheck;
 
     extern pros::v5::Rotation horizontalEncoder;
 }; // namespace Nova

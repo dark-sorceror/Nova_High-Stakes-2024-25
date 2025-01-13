@@ -17,12 +17,44 @@ float prevHorizontal1 = 0;
 float prevImu = 0;
 
 /**
+ * @brief Get the Vertical Distance Traveled object
+ * 
+ * @return float 
+ */
+float getVerticalDistanceTraveled() {
+    return (
+        (Nova::backLeft.get_position() + Nova::backRight.get_position() + \
+            Nova::middleLeft.get_position() + Nova::middleRight.get_position() + \
+            Nova::frontLeft.get_position() + Nova::frontRight.get_position()) / 6) * 3.25 * M_PI * (450 / 600);
+}
+
+/**
  * @brief Get the Horizontal Distance Traveled object
  * 
  * @return float 
  */
 float getHorizontalDistanceTraveled() {
     return (float(Nova::horizontalEncoder.get_position()) * 2 * M_PI / 36000) / 1;
+}
+
+/**
+ * @brief Convert from degree to radians
+ *
+ * @param value
+ * @return float
+ */
+float degToRad(float degrees) {
+    return degrees * M_PI / 180;
+}
+
+/**
+ * @brief Convert from radians to degrees
+ *
+ * @param value
+ * @return float
+ */
+float radToDeg(float radians) {
+    return radians * 180 / M_PI;
 }
 
 /**

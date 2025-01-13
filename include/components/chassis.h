@@ -12,7 +12,6 @@
 #include <cmath>
 
 #include "globals.h"
-#include "utils.h"
 #include "pose.h"
 #include "pid.h"
 

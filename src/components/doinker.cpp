@@ -11,11 +11,11 @@
 bool donkerToggle = false;
 
 void Nova::Doinker::up() {
-    Nova::clamp.set_value(0);
+    Nova::doinker.set_value(0);
 }
 
 void Nova::Doinker::down() {
-    Nova::clamp.set_value(1);
+    Nova::doinker.set_value(1);
 }
 
 /**

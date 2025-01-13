@@ -29,7 +29,9 @@ void Nova::Chassis::initialize() {
  * @return float
  */
 float Nova::Chassis::getAvgEncoderValue() {
-    return average(Nova::drive.get_position_all());
+    return (Nova::frontLeft.get_position() + Nova::frontRight.get_position() + \
+        Nova::middleLeft.get_position() + Nova::middleRight.get_position() + \
+        Nova::backLeft.get_position() + Nova::backRight.get_position()) / 6;
 }
 
 /**
@@ -38,7 +40,9 @@ float Nova::Chassis::getAvgEncoderValue() {
  * @return float
  */
 float Nova::Chassis::getAvgVelocity() {
-    return average(Nova::drive.get_actual_velocity_all());
+    return (Nova::frontLeft.get_actual_velocity() + Nova::frontRight.get_actual_velocity() + \
+        Nova::middleLeft.get_actual_velocity() + Nova::middleRight.get_actual_velocity() + \
+        Nova::backLeft.get_actual_velocity() + Nova::backRight.get_actual_velocity()) / 6;
 }
 
 /**
