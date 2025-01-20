@@ -35,6 +35,7 @@
 #include "components/intake.h"
 #include "components/clamp.h"
 #include "components/doinker.h"
+#include "components/ladyBrown.h"
 
 #include "auton.h"
 

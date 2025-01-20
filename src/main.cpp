@@ -3,7 +3,7 @@
  *
  * \brief Main file
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 1/20/2025
  */
 
 #include "main.h"
@@ -13,6 +13,8 @@ Nova::Brain brain = Nova::Brain();
 Nova::Chassis chassis = Nova::Chassis();
 
 Nova::Intake intake = Nova::Intake();
+
+Nova::LadyBrown ladyBrown = Nova::LadyBrown();
 
 Nova::Clamp clamp = Nova::Clamp();
 
@@ -60,12 +62,14 @@ void autonomous() {
 void opcontrol() {
     Nova::lbCheck.reset();
     Nova::lbCheck.reset_position();
+
     while (true) {
         chassis.updatePosition(); // tracking algorithm loop
+
         chassis.run();
         intake.run();
         clamp.run();
-        doinker.run();
+        ladyBrown.run();
 
         //Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
 

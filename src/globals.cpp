@@ -3,7 +3,7 @@
  *
  * \brief Contains variables for ports
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/20/2025
  */
 
 #include "api.h"
@@ -22,8 +22,8 @@ namespace Nova {
     pros::Motor middleLeft(-20, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
     pros::Motor backLeft(19, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
 
-    pros::Motor frontRight(6, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-    pros::Motor middleRight(7, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor frontRight(8, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor middleRight(8, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
     pros::Motor backRight(-8, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
 
     pros::MotorGroup leftDrive(
@@ -58,15 +58,16 @@ namespace Nova {
     pros::adi::Pneumatics clamp('H', true, true);
     pros::adi::Pneumatics raiseIntake('A', true, false);
     pros::adi::Pneumatics doinker('B', false, false);
+    pros::adi::Pneumatics goalRush('C', false, false);
 
     pros::Optical optical(4);
 
-    pros::Imu imu1(9);
-    pros::Imu imu2(10);
+    pros::Imu imu1(19);
+    pros::Imu imu2(20);
 
-    pros::Motor lb1(2);
-    pros::Motor lb2(3);
-    pros::Rotation lbCheck(1);
+    pros::Motor lb1(1);
+    pros::Motor lb2(2);
+    pros::Rotation lbCheck(3);
 
     pros::Rotation horizontalEncoder(2);
 } // namespace Nova
