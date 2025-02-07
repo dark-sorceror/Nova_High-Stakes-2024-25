@@ -29,11 +29,11 @@ Nova::Auton auton = Nova::Auton(chassis, intake, clamp);
 void initialize() {
     pros::lcd::initialize();
     
-    brain.initialize();
-    chassis.initialize();
+    //brain.initialize();
+    //chassis.initialize();
     intake.initialize();
 
-    Nova::lbCheck.reset();
+    //Nova::lbCheck.reset();
 }
 
 void disabled() {}
@@ -43,8 +43,8 @@ void disabled() {}
  * 
  */
 void competition_initialize() {
-    brain.initialize();
-    chassis.initialize();
+    //brain.initialize();
+    //chassis.initialize();
     intake.initialize();
 }
 
@@ -60,16 +60,16 @@ void autonomous() {
  * 
  */
 void opcontrol() {
-    Nova::lbCheck.reset();
-    Nova::lbCheck.reset_position();
+    //Nova::lbCheck.reset();
+    //Nova::lbCheck.reset_position();
 
     while (true) {
-        chassis.updatePosition(); // tracking algorithm loop
+       // chassis.updatePosition(); // tracking algorithm loop
 
-        chassis.run();
+        //chassis.run();
         intake.run();
-        clamp.run();
-        ladyBrown.run();
+        //clamp.run();
+        //ladyBrown.run();
 
         //Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
 

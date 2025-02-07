@@ -3,10 +3,10 @@
  *
  * \brief Contains position operations and logic
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 1/20/2025
  */
 
-#include "pose.h"
+#include "modules/pose.h"
 
 /**
  * @brief Construct a new Nova::Pose::Pose object

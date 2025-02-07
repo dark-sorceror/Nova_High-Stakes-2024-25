@@ -29,12 +29,7 @@ void Nova::Intake::stop() {
  * @brief Run Intake
  * 
  */
-void Nova::Intake::run() {
-    // RED ALLIANCE: optical.get_hue() > 130 && optical.get_hue() < 210 && optical.get_proximity() > 240
-    // BLUE ALLIANCE: optical.get_hue() > 5 && optical.get_hue() < 40 && optical.get_proximity() > 240
-
-    if (optical.get_hue() > 5 && optical.get_hue() < 40 && optical.get_proximity() > 240) Nova::intake.move(127);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-    else if (ctr.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) Nova::intake.move(-100);
-    else if (ctr.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) Nova::intake.move(100);
-    else Nova::intake.brake();
+void Nova::Intake::run() {   
+    ctr.print(0, 0, "%.2f", intake.get_actual_velocity());                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    if (ctr.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) Nova::intake.move(-80);
 }

@@ -60,7 +60,7 @@ namespace Nova {
     pros::adi::Pneumatics doinker('B', false, false);
     pros::adi::Pneumatics goalRush('C', false, false);
 
-    pros::Optical optical(4);
+    pros::Optical optical(1);
 
     pros::Imu imu1(19);
     pros::Imu imu2(20);

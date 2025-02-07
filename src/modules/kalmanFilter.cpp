@@ -3,10 +3,10 @@
  *
  * \brief Contains kalman filtering function
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/20/2025
  */
 
-#include "kalmanFilter.h"
+#include "modules/kalmanFilter.h"
 
 Nova::KalmanFilter::KalmanFilter (
     float kalmanState,

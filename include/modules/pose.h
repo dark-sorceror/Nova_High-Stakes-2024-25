@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for pose.cpp
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 1/20/2025
  */
 
 #ifndef _POSE_H_

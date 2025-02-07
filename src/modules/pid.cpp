@@ -3,25 +3,25 @@
  *
  * \brief Contains PID Controller loop functions
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 1/20/2025
  */
 
-#include "pid.h"
+#include "modules/pid.h"
 
 Nova::PID::PID (
     float kP,
     float kI,
     float kD,
-    float maxCumulativeError,
-    float settleError,
-    float settleTime
+    float tolerance,
+    float integralShreshold,
+    float maxIntegral
 ):
     kP(kP),
     kI(kI),
     kD(kD),
-    maxCumulativeError(maxCumulativeError),
-    settleError(settleError),
-    settleTime(settleTime)
+    tolerance(tolerance),
+    integralShreshold(integralShreshold),
+    maxIntegral(maxIntegral)
 {};
 
 Nova::KalmanFilter kalmanFilter = Nova::KalmanFilter (
@@ -38,8 +38,17 @@ Nova::KalmanFilter kalmanFilter = Nova::KalmanFilter (
  * @param error 
  * @return float 
  */
-float Nova::PID::compute(float error, bool useKalman) {
-    float deltaError = error - prevError;
+float Nova::PID::compute(float error) {
+    if (std::fabs(error) < tolerance) integral = 0;
+    else if (std::fabs(error) < integralShreshold) integral += error;
+    if (integral > maxIntegral) integral = maxIntegral;
+    derivative = error - prevError;
+    prevError = error;
+
+    return (error * kP + integral * kI + derivative * kD);
+
+    /*
+     float deltaError = error - prevError;
 
     if (fabs(error) < maxCumulativeError) {
         accumulatedError += error;
@@ -63,7 +72,7 @@ float Nova::PID::compute(float error, bool useKalman) {
     }
     */
 
-    float smoothedError = useKalman ? kalmanFilter.filter(error) : error;
+    // float smoothedError = useKalman ? kalmanFilter.filter(error) : error;
 
     float smoothedDeriv = alpha * deltaError + (1 - alpha) * prevDeriv;
 
@@ -74,6 +83,7 @@ float Nova::PID::compute(float error, bool useKalman) {
     prevDeriv = smoothedDeriv; // futureError
 
     return output;
+    */
 }
 
 bool Nova::PID::isSettled() {

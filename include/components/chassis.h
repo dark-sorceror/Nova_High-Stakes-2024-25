@@ -12,8 +12,8 @@
 #include <cmath>
 
 #include "globals.h"
-#include "pose.h"
-#include "pid.h"
+#include "modules/pose.h"
+#include "modules/pid.h"
 
 struct Point {
     float x;
@@ -85,6 +85,8 @@ namespace Nova {
              * @param angle 
              */
             void rotate(float angle);
+
+            void driveAngle(double targetDistance, double targetHeading, double timeout, bool resetSensors = true, double rushErrorThreshold = -1, double slewRate = -1);
 
             /**
              * @brief Rotate the Robot in 360 degree directions with 90 as North

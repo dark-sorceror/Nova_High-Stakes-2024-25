@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for pid.cpp
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 1/20/2025
  */
 
 #ifndef _PID_H_
@@ -22,12 +22,12 @@ namespace Nova {
                 float kP, 
                 float kI, 
                 float kD, 
-                float maxCumulativeError,
-                float settleError,
-                float settleTime
+                float tolerance,
+                float integralShreshold,
+                float maxIntegral
             );
 
-            float compute(float error, bool useKalman);
+            float compute(float error);
 
             bool isSettled();
 
@@ -51,6 +51,11 @@ namespace Nova {
             float kP = 0;
             float kI = 0;
             float kD = 0;
+            float tolerance = 0;
+            float maxIntegral = 0;
+            float integralShreshold = 0;
+            float integral = 0;
+            float derivative = 0;
 
             float dT = 0.2;
 
@@ -61,7 +66,7 @@ namespace Nova {
             float maxCumulativeError = 0;
             float futureError = 0;
             float prevError = 0;
-            float maxIntegral = 100;
+            float maxIntegral = 0;
             float alpha = 0.1;
 
             float settleTime = 0;

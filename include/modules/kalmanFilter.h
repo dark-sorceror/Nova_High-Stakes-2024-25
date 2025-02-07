@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for kalmanFilter.cpp
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 1/20/2025
  */
 
 #ifndef _KALMANFILTER_H_

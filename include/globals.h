@@ -39,6 +39,7 @@ namespace Nova {
 
     extern pros::adi::Pneumatics clamp;
     extern pros::adi::Pneumatics doinker;
+    extern pros::adi::Pneumatics goalRush;
 
     // Auton Dependent
     extern pros::v5::Imu imu1;

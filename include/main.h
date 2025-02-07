@@ -27,8 +27,8 @@
 
 #include "globals.h"
 
-#include "pose.h"
-#include "pid.h"
+#include "modules/pose.h"
+#include "modules/pid.h"
 
 #include "components/chassis.h"
 
