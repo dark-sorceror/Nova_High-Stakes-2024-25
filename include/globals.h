@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for globals.cpp
  * 
- * \date Updated - 12/25/2024
+ * \date Updated - 2/10/2025
  */
 
 #ifndef _GLOBALS_H_
@@ -36,23 +36,21 @@ namespace Nova {
 
     // Components
     extern pros::v5::Motor intake;
-
-    extern pros::adi::Pneumatics clamp;
-    extern pros::adi::Pneumatics doinker;
-    extern pros::adi::Pneumatics raiseIntake;
-    extern pros::adi::Pneumatics goalRush;
+    extern pros::adi::Pneumatics intakePiston;
+    extern pros::v5::Optical colorCheck;
     extern pros::adi::Pneumatics colorSort;
 
-    // Auton Dependent
-    extern pros::v5::Imu imu1;
-    extern pros::v5::Imu imu2;
+    extern pros::adi::Pneumatics clamp;
+    extern pros::v5::Distance clampCheck;
 
-    extern pros::v5::Optical optical;
+    extern pros::adi::Pneumatics doinker;
 
     extern pros::v5::Motor lb;
     extern pros::v5::Rotation lbCheck;
 
-    extern pros::v5::Distance clampCheck;
+    // Auton Dependent
+    extern pros::v5::Imu imu1;
+    extern pros::v5::Imu imu2;
 
     extern pros::v5::Rotation horizontalEncoder;
 }; // namespace Nova

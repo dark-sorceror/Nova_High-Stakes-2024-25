@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for chassis.cpp
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 2/10/2025
  */
 
 #ifndef _CHASSIS_H_
@@ -86,6 +86,16 @@ namespace Nova {
              */
             void rotate(float angle);
 
+            /**
+             * @brief 2D PID; Translate and rotate the robot at the same time
+             * 
+             * @param targetDistance 
+             * @param targetHeading 
+             * @param timeout 
+             * @param resetSensors 
+             * @param rushErrorThreshold 
+             * @param slewRate 
+             */
             void driveAngle(double targetDistance, double targetHeading, double timeout, bool resetSensors, double rushErrorThreshold, double slewRate);
 
             /**

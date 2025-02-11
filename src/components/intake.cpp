@@ -16,7 +16,7 @@ bool intakeRaised = false;
  */
 void Nova::Intake::initialize() {
     Nova::intake.tare_position();
-    optical.set_led_pwm(75);
+    colorCheck.set_led_pwm(75);
 }
 
 void Nova::Intake::start(int voltage) {
@@ -27,12 +27,12 @@ void Nova::Intake::stop() {
     Nova::intake.move_voltage(0);
 }
 
-void Nova::Intake::extendGoalRush() {
-    Nova::raiseIntake.set_value(1);
+void Nova::Intake::raiseIntake() {
+    Nova::intakePiston.set_value(1);
 }
 
-void Nova::Intake::retractGoalRush() {
-    Nova::raiseIntake.set_value(0);
+void Nova::Intake::lowerIntake() {
+    Nova::intakePiston.set_value(0);
 }
 
 /**
@@ -40,9 +40,9 @@ void Nova::Intake::retractGoalRush() {
  * 
  */
 void Nova::Intake::run() {         
-    // RED ALLIANCE: optical.get_hue() > 130 && optical.get_hue() < 210 && optical.get_proximity() > 240
-    // BLUE ALLIANCE: optical.get_hue() > 5 && optical.get_hue() < 40 && optical.get_proximity() > 240
-    if (optical.get_hue() > 5 && optical.get_hue() < 40 && optical.get_proximity() > 240) {
+    // RED ALLIANCE: colorCheck.get_hue() > 130 && colorCheck.get_hue() < 210 && colorCheck.get_proximity() > 240
+    // BLUE ALLIANCE: colorCheck.get_hue() > 5 && colorCheck.get_hue() < 40 && colorCheck.get_proximity() > 240
+    if (colorCheck.get_hue() > 5 && colorCheck.get_hue() < 40 && colorCheck.get_proximity() > 240) {
         pros::Task colorSortLogic([] {
             Nova::colorSort.set_value(1);
             pros::delay(500);

@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for intake.cpp
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 2/10/2025
  */
 
 #ifndef _INTAKE_H_
@@ -17,8 +17,8 @@ namespace Nova {
             void initialize();
             void start(int voltage);
             void stop();
-            void extendGoalRush();
-            void retractGoalRush();
+            void raiseIntake();
+            void lowerIntake();
             void run();
     };
 } // namespace Nova

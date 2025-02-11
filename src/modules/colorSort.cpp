@@ -7,4 +7,3 @@
  */
 
 #include "modules/colorSort.h"
-

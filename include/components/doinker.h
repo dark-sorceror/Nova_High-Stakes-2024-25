@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for doinker.cpp
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 2/10/2025
  */
 
 #ifndef _DOINKER_H_
@@ -14,8 +14,8 @@
 namespace Nova {
     class Doinker {
         public:
-            void up();
-            void down();
+            void extend();
+            void retract();
             void run();
     };
 } // namespace Nova

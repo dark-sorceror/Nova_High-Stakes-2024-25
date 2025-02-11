@@ -11,11 +11,11 @@
 bool clampToggle = false;
 bool clampJustReleased = false;
 
-void Nova::Clamp::lock() {
+void Nova::Clamp::clamp() {
     Nova::clamp.set_value(1);
 }
 
-void Nova::Clamp::unlock() {
+void Nova::Clamp::unclamp() {
     Nova::clamp.set_value(0);
 }
 
@@ -31,7 +31,7 @@ void Nova::Clamp::run() {
     
             clampJustReleased = true;
             
-            pros::delay(1000); // delay to leave the unclamped stake before it is registered as a clamp again
+            pros::delay(1000); // Delay to leave the unclamped stake before it is registered as a clamp again
     
             clampJustReleased = false;
         });
@@ -40,6 +40,6 @@ void Nova::Clamp::run() {
     if (clampCheck.get_distance() <= 50 && !clampToggle && !clampJustReleased) {
         clampToggle = true;
         pros::delay(500);
-        clamp.set_value(true);
+        this -> clamp();
     }
 }

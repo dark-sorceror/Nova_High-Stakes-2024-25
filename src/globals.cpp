@@ -3,7 +3,7 @@
  *
  * \brief Contains variables for ports
  * 
- * \date Updated - 1/20/2025
+ * \date Updated - 2/10/2025
  */
 
 #include "api.h"
@@ -54,21 +54,21 @@ namespace Nova {
     );
 
     pros::Motor intake(-8);
+    pros::adi::Pneumatics colorSort('B', false, false);
+    pros::Optical colorCheck(4);
+    pros::adi::Pneumatics intakePiston('C', false, false);
 
     pros::adi::Pneumatics clamp('A', false, false);
-    pros::adi::Pneumatics colorSort('B', false, false);
-    pros::adi::Pneumatics raiseIntake('C', false, false);
+    pros::Distance clampCheck(15);
+
     pros::adi::Pneumatics doinker('D', false, false);
-
-    pros::Optical optical(4);
-
-    pros::Imu imu1(9);
-    pros::Imu imu2(10);
 
     pros::Motor lb(16);
     pros::Rotation lbCheck(5);
 
-    pros::Distance clampCheck(15);
+    // Auton dependent
+    pros::Imu imu1(9);
+    pros::Imu imu2(10);
 
     pros::Rotation horizontalEncoder(20);
 } // namespace Nova
