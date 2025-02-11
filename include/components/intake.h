@@ -15,8 +15,10 @@ namespace Nova {
     class Intake {
         public:
             void initialize();
-            void start();
+            void start(int voltage);
             void stop();
+            void extendGoalRush();
+            void retractGoalRush();
             void run();
     };
 } // namespace Nova

@@ -6,59 +6,87 @@
  * \date Updated - 1/20/2025
  */
 
-#include "components/ladyBrown.h"
+ #include "components/ladyBrown.h"
 
-const int numStates = 5;
-double states[numStates] = {138, 171, 182, 310, 359};
-int currState = 0;
-double target = 138;
+ const int numWallStakeStates = 5;
+ double wallStakeStates[numWallStakeStates] = {132, 150, 170, 250, 350};
 
-void nextState() {
+const int numAllianceStakeStates = 5;
+double allianceStakeStates[numAllianceStakeStates] = {132, 150, 170, 300, 350};
+
+ int currState = 0;
+ double target = 132;
+
+ void Nova::LadyBrown::goToPosition(int position) {
+    target = position;
+ }
+ 
+ void nextWallStakeState() {
+     currState += 1;
+ 
+     if (currState == 4) {
+         pros::Task shootReturn([]{
+             target = wallStakeStates[currState];
+             pros::delay(500);
+             currState = 1;
+ 
+             target = wallStakeStates[currState] + 1.5;
+         });
+     } else {
+         target = wallStakeStates[currState];
+     }
+ }
+  
+ void nextAllianceStakeStates() {
     currState += 1;
 
-    if (currState == 3) {
+    if (currState == 4) {
         pros::Task shootReturn([]{
-            target = states[currState];
+            target = allianceStakeStates[currState];
             pros::delay(500);
             currState = 1;
 
-            target = states[currState] + 1.5;
+            target = allianceStakeStates[currState] + 1.5;
         });
     } else {
-        target = states[currState];
+        target = allianceStakeStates[currState];
     }
 }
+ 
+ void liftControl() {
+     double error = target - round(Nova::lbCheck.get_angle()/100);
+     double kp = 2.5;
+     double velocity = kp * error;
+ 
+     float power = velocity > 127 ? 127 : (velocity < -127 ? -127 : velocity);
+ 
+     if (Nova::lbCheck.get_angle() != target) {
+         Nova::lb.move(power);
+     }
+ }
+ 
+ void Nova::LadyBrown::initialize() {
+     pros::Task liftControlTask([]{
+         while (true) {
+             liftControl();
+             pros::delay(10);
+         }
+     });
+ 
+     nextWallStakeState();
+ }
+ 
+ void Nova::LadyBrown::run() {
+         if (Nova::ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)) {
+             nextWallStakeState();
+         } 
 
-void liftControl() {
-    double error = target - round(Nova::lbCheck.get_angle()/100);
-    double kp = 1.55;
-    double velocity = kp * error;
+         if (Nova::ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
+            nextAllianceStakeStates();
+         }
 
-    float power = velocity > 30 ? 30 : (velocity < -30 ? -30 : velocity);
-
-    if (Nova::lbCheck.get_angle() != target) {
-        Nova::lb1.move(power);
-        Nova::lb2.move(-power);
-    }
-}
-
-void Nova::LadyBrown::initialize() {
-    pros::Task liftControlTask([]{
-        while (true) {
-            liftControl();
-            pros::delay(10);
-        }
-    });
-
-    nextState();
-}
-
-void Nova::LadyBrown::run() {
-    while (true) {
-        if (Nova::ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)) {
-			nextState();
-		}
-
-	    pros::delay(20);
-    }
-}
+         pros::lcd::print(0, "%.2f", round(Nova::lbCheck.get_angle() / 100));
+         pros::lcd::print(1, "%d", currState);
+ 
+         pros::delay(20);
+ }

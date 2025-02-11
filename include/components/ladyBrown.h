@@ -17,6 +17,7 @@
 namespace Nova {
     class LadyBrown {
         public:
+            void goToPosition(int position);
             void initialize();
             void run();
     };

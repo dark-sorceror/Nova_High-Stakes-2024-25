@@ -23,7 +23,7 @@ void Nova::Doinker::down() {
  *
  */
 void Nova::Doinker::run() {
-    if (ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
+    if (ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
         donkerToggle = !donkerToggle;
 
         doinker.set_value(donkerToggle);

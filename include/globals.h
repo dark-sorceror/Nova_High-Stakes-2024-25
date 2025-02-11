@@ -39,7 +39,9 @@ namespace Nova {
 
     extern pros::adi::Pneumatics clamp;
     extern pros::adi::Pneumatics doinker;
+    extern pros::adi::Pneumatics raiseIntake;
     extern pros::adi::Pneumatics goalRush;
+    extern pros::adi::Pneumatics colorSort;
 
     // Auton Dependent
     extern pros::v5::Imu imu1;
@@ -47,9 +49,10 @@ namespace Nova {
 
     extern pros::v5::Optical optical;
 
-    extern pros::v5::Motor lb1;
-    extern pros::v5::Motor lb2;
+    extern pros::v5::Motor lb;
     extern pros::v5::Rotation lbCheck;
+
+    extern pros::v5::Distance clampCheck;
 
     extern pros::v5::Rotation horizontalEncoder;
 }; // namespace Nova

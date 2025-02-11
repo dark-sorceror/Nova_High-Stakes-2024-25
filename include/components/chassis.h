@@ -86,7 +86,7 @@ namespace Nova {
              */
             void rotate(float angle);
 
-            void driveAngle(double targetDistance, double targetHeading, double timeout, bool resetSensors = true, double rushErrorThreshold = -1, double slewRate = -1);
+            void driveAngle(double targetDistance, double targetHeading, double timeout, bool resetSensors, double rushErrorThreshold, double slewRate);
 
             /**
              * @brief Rotate the Robot in 360 degree directions with 90 as North

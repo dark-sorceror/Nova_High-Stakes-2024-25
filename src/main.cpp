@@ -20,7 +20,7 @@ Nova::Clamp clamp = Nova::Clamp();
 
 Nova::Doinker doinker = Nova::Doinker();
 
-Nova::Auton auton = Nova::Auton(chassis, intake, clamp);
+Nova::Auton auton = Nova::Auton(chassis, intake, clamp, ladyBrown);
 
 /**
  * @brief Initialize
@@ -30,8 +30,9 @@ void initialize() {
     pros::lcd::initialize();
     
     //brain.initialize();
-    //chassis.initialize();
+    chassis.initialize();
     intake.initialize();
+    ladyBrown.initialize();
 
     //Nova::lbCheck.reset();
 }
@@ -43,9 +44,7 @@ void disabled() {}
  * 
  */
 void competition_initialize() {
-    //brain.initialize();
-    //chassis.initialize();
-    intake.initialize();
+
 }
 
 /**
@@ -53,6 +52,7 @@ void competition_initialize() {
  * 
  */
 void autonomous() {
+    auton.test();
 }
 
 /**
@@ -66,12 +66,13 @@ void opcontrol() {
     while (true) {
        // chassis.updatePosition(); // tracking algorithm loop
 
-        //chassis.run();
+        chassis.run();
         intake.run();
-        //clamp.run();
-        //ladyBrown.run();
+        clamp.run();
+        ladyBrown.run();
+        doinker.run();
 
-        //Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
+        //pros::lcd::print(0, "%d", Nova::lbCheck.get_angle());
 
         pros::delay(10);
     }

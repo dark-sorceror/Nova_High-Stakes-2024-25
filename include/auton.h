@@ -12,6 +12,7 @@
 #include "components/chassis.h"
 #include "components/intake.h"
 #include "components/clamp.h"
+#include "components/ladyBrown.h"
 
 namespace Nova {
     class Auton {
@@ -23,18 +24,21 @@ namespace Nova {
              * @param intake 
              * @param clamp 
              */
-            Auton(Nova::Chassis chassis, Nova::Intake intake, Nova::Clamp clamp);
+            Auton(Nova::Chassis chassis, Nova::Intake intake, Nova::Clamp clamp, Nova::LadyBrown ladyBrown);
 
             /**
              * @brief Blue 1 Elimination Auton Path
              * 
              */
             void test();
+
+            void skills();
             
         private:
             Chassis chassis;
             Intake intake;
             Clamp clamp;
+            LadyBrown ladyBrown;
     };
 } // namespace Nova
 

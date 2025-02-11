@@ -68,15 +68,15 @@ double sign(double a)
  * @brief Translate the Robot in x or y directions
  *
  * @param dist //inches
-
+*/
 void Nova::Chassis::translate(float dist) {
     Nova::PID chassisPID = Nova::PID(
-        5.75, // kp
-        4,  // ki
-        55, // kd increasing this will make more smooth
+        4.5, // kp
+        0,  // ki
+        10, // kd increasing this will make more smooth
         0, // max cumulative error inches
-        10,  // settle error inchjes
-        100 // settle time MILLIS
+        5,  // settle error inchjes
+        200 // settle time MILLIS
     );
     // 2pir * rpm  * 1m = distance
     // ticks / (300 / 2pir) = inches travelled
@@ -92,9 +92,9 @@ void Nova::Chassis::translate(float dist) {
     float chassisPower = 0.0;
 
     while (!(chassisPID.isSettled())) {
-        float chassisError = targetPosition - ticksToInches((Nova::backLeft.get_position() + Nova::backRight.get_position()) / 2);
+        float chassisError = targetPosition - ticksToInches(this -> getAvgEncoderValue());
 
-        float chassisOutput = chassisPID.compute(chassisError, true);
+        float chassisOutput = chassisPID.compute(chassisError);
 
         angleError = targetAngle - this -> getIMURotation();
 
@@ -126,9 +126,9 @@ void Nova::Chassis::translate(float dist) {
 
 void Nova::Chassis::rotate(float angle) {
     Nova::PID turnPID = Nova::PID(
-        2,  // kp
-        4,  // ki
-        7, // kd
+        4,  // kp
+        0,  // ki
+        50, // kd
         0, // max cumulative error inches
         5,  // settle error inchjes
         200 // settle time MILLIS
@@ -139,9 +139,7 @@ void Nova::Chassis::rotate(float angle) {
     while (!(turnPID.isSettled())) {
         float error = targetPosition - this -> getIMURotation();
 
-        float power = turnPID.compute(error, false);
-
-        Nova::ctr.print(0, 0, "%0.2f", error);
+        float power = turnPID.compute(error);
 
         turnPID.checkIfSettled(error);
 
@@ -157,28 +155,29 @@ void Nova::Chassis::rotate(float angle) {
 
     turnPID.reset();
 }
-*/
 
+
+/*
 void Nova::Chassis::driveAngle(double targetDistance, double targetHeading, double timeout, bool resetSensors = true, double rushErrorThreshold = -1, double slewRate = -1)
 {
     int startTime = pros::millis();
 
     Nova::PID chassisPID = Nova::PID(
-        5.75, // kp
-        4,  // ki
-        55, // kd increasing this will make more smooth
+        5, // kp
+        0,  // ki
+        0, // kd increasing this will make more smooth
         0, // tolerance
-        10,  // integralshreshold
-        100 // max integral
+        0,  // integralshreshold
+        0 // max integral
     );
 
      Nova::PID turnPID = Nova::PID(
-        2,  // kp
-        4,  // ki
-        7, // kd
+        2.5,  // kp
+        0,  // ki
+        0, // kd
         0, // tolerance
-        10,  // integralshreshold
-        100 // max integral
+        0,  // integralshreshold
+        0 // max integral
     );
     
     double linearTolerance = 0;
@@ -238,3 +237,4 @@ void Nova::Chassis::driveAngle(double targetDistance, double targetHeading, doub
     
     drive.brake();
 }
+*/
