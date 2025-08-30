@@ -12,7 +12,7 @@
 #include "components/chassis.h"
 #include "components/intake.h"
 #include "components/clamp.h"
-#include "components/ladyBrown.h"
+#include "components/ladyBrown/ladyBrown.h"
 
 namespace Nova {
     class Auton {

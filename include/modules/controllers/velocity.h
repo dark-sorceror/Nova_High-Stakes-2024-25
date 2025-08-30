@@ -1,9 +1,9 @@
 /**
- * \file pid.h
+ * \file velocity.h
  *
- * \brief Contains definitions for pid.cpp
+ * \brief Contains definitions for velocity.cpp
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 3/10/2025
  */
 
 #ifndef _VELOCITY_H_
@@ -40,6 +40,7 @@ namespace Nova {
             double vl, va;
             double linMin, linMax;
             double angMin, angMax;
+
             std::optional<double> slew;
             ChassVelocities prev;
 

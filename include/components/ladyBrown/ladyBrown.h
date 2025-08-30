@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for ladyBrown.cpp
  * 
- * \date Updated - 2/10/2025
+ * \date Updated - 8/30/2025
  */
 
 #ifndef _LADYBROWN_H_
@@ -13,26 +13,28 @@
 #include "pros/rtos.hpp"
 
 #include "globals.h"
-#include "components/intake.h"
 
-#include "ladyBrown/states.h"
+#include "components/intake.h"
+#include "components/ladyBrown/states.h"
 
 namespace Nova {
     class LadyBrown {
         public:
-            void goToPosition(float position);
             void initialize();
-            void run();
+            void startControl();
+            void calibrate();
+
+            void goToPosition(float position);
+
             void next();
             void prev();
             void toggle();
             void score();
+
             void setState(LadyBrownState newState);
             void setTarget(LadyBrownState state);
-            void startControl();
-            void spin(double voltage);
-            void setControl(bool on);
-            void calibrate();
+
+            void run();
 
         private:
             pros::Motor *motor;

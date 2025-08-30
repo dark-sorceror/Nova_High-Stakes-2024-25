@@ -3,14 +3,15 @@
  *
  * \brief Contains Chassis movement in autonomous
  * 
- * \date Updated - 3/10/2025
+ * \date Updated - 8/30/2025
  */
 
 #include "globals.h"
 
+#include "modules/controllers/velocity.h"
+
 #include "components/chassis.h"
 
-#include "modules/controllers/velocity.h"
 
 void Nova::Chassis::driveAngle(double targetDistance, double targetHeading, double timeout, bool resetSensors = true, double rushErrorThreshold = -1, double slewRate = -1) {
     // chassMutex.take();

@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for pid.cpp
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 3/10/2025
  */
 
 #ifndef _PID_H_
@@ -23,7 +23,7 @@ namespace Nova {
     class PID {
         double kP, kI, kD;
         double integral, prevError;
-        
+
         public:
             PID(PIDConstants cons) : kP(cons.kP), kI(cons.kI), kD(cons.kD), integral(0), prevError(0) {}
             

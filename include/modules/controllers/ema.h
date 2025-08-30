@@ -1,9 +1,9 @@
 /**
- * \file pid.h
+ * \file ema.h
  *
- * \brief Contains definitions for pid.cpp
+ * \brief Contains definitions for ema.cpp
  * 
- * \date Updated - 1/6/2025
+ * \date Updated - 8/30/2025
  */
 
 #ifndef _EMA_H_
@@ -28,4 +28,4 @@ namespace Nova {
         };
 };
 
-#endif
+#endif // _EMA_H_

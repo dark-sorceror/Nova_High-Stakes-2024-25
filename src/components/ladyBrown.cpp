@@ -3,7 +3,7 @@
  *
  * \brief Contains lady brown logic
  *
- * \date Updated - 2/10/2025
+ * \date Updated - 8/30/2025
  */
 
 #include "components/ladyBrown/ladyBrown.h"
@@ -24,16 +24,32 @@ double targetPos = Nova::intake.get_position();
 
 Nova::State* Nova::State::instance = nullptr;
 
+void Nova::LadyBrown::initialize() {
+    if (task == nullptr) { // check for background tasks
+        motor -> set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+        task = new pros::Task{[this] {
+            while (true) {
+                control();
+
+                pros::delay(10);
+            }
+        }};
+    }
+    
+    pros::delay(20);
+}
+
 Nova::LadyBrownState Nova::State::getLadyBrownState()  {
     mutex.take();
-    auto returnVal = LadyBrownState;
+    auto returnVal = ladyBrownState;
     mutex.give();
     return returnVal; 
 }
 
-void RobotState::setLiftState(LiftState state) {
+void Nova::State::setLadyBrownState(Nova::LadyBrownState state) {
     mutex.take();
-    liftState = state;
+    ladyBrownState = state;
     mutex.give();
 }
 
@@ -41,21 +57,11 @@ void Nova::LadyBrown::goToPosition(float position) {
     target = position;
 }
 
-/*
-void nextWallStakeState() {
-    currState += 1;
-
-   if (currState == 2) currState = 0;
-
-    target = wallStakeStates[currState];
-}
-*/
-
-void Nova::LadyBrown::setState(LadyBrownState state) {
+void Nova::LadyBrown::setState(Nova::LadyBrownState state) {
     currentState = state;
     setTarget(currentState);
-    auto s = RobotState::getInstance();
-    s->setLadyBrownState(currentState);
+    auto s = Nova::State::getInstance();
+    s -> setLadyBrownState(currentState);
 }
 
 void Nova::LadyBrown::next() {
@@ -68,42 +74,6 @@ void Nova::LadyBrown::prev() {
 
 void Nova::LadyBrown::setTarget(LadyBrownState state) {
     target = valueMap[state];
-}
-
-void Nova::LadyBrown::startControl() {
-    if (task == nullptr) { // check for background tasks
-        calibrate();
-
-        motor -> set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
-        task = new pros::Task{[this] {
-            while (true) {
-                control();
-
-                pros::delay(10);
-            }
-        }};
-    } else {
-        calibrate();
-    }
-    
-    pros::delay(20);
-}
-
-void Nova::LadyBrown::calibrate() {
-    double current = motor -> get_current_draw();
-    pros::delay(100);
-    motor -> move(-70);
-    pros::delay(100);
-
-    while (current < 980) {
-        current = motor -> get_current_draw();
-        pros::delay(10);
-    }
-
-    motor -> tare_position();
-    motor -> move(0);
-
 }
 
 void control() {
@@ -130,35 +100,20 @@ void intakeControl() {
     }
 }
 
-void Nova::LadyBrown::initialize() {
-    pros::Task liftControlTask([] {
-        while (true) {
-            if (!manual) {
-                control();
-            }
-            if(intakea) {
-                intakeControl();
-            } 
+/* test
+void nextWallStakeState() {
+    currState += 1;
 
-            pros::delay(10);
-        } 
-    });
+   if (currState == 2) currState = 0;
+
+    target = wallStakeStates[currState];
 }
-
-void Nova::LadyBrown::spin(double voltage) {
-    if (off) {
-        motor->move(voltage);
-
-        if (voltage == 0 && (abs(motor->get_position() - target) <= snapRange)) {
-            off = false; // snapping back into control mode
-        }
-    }
-}
+*/
 
 void Nova::LadyBrown::run() {
     if (Nova::ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)) {
         manual = false;
-        nextWallStakeState();
+        next();
     }
     
     if (Nova::ctr.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {

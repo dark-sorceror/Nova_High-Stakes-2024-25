@@ -28,14 +28,17 @@
 #include "globals.h"
 
 #include "modules/pose.h"
-#include "modules/pid.h"
+#include "modules/controllers/pid.h"
+#include "modules/controllers/ema.h"
+#include "modules/controllers/velocity.h"
 
 #include "components/chassis.h"
 
 #include "components/intake.h"
 #include "components/clamp.h"
 #include "components/doinker.h"
-#include "components/ladyBrown.h"
+#include "components/ladyBrown/ladyBrown.h"
+#include "components/ladyBrown/states.h"
 
 #include "auton.h"
 

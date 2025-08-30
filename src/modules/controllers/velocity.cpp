@@ -1,3 +1,11 @@
+/**
+ * \file velocity.cpp
+ *
+ * \brief Contains Velocity Controller loop functions
+ * 
+ * \date Updated - 8/30/2025
+ */
+
 #include "modules/controllers/velocity.h"
 
 void Nova::VelocityController::setVelocity(double v) { target = v; }
