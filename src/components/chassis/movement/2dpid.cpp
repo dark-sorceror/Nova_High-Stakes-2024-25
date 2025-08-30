@@ -12,7 +12,6 @@
 
 #include "components/chassis.h"
 
-
 void Nova::Chassis::driveAngle(double targetDistance, double targetHeading, double timeout, bool resetSensors = true, double rushErrorThreshold = -1, double slewRate = -1) {
     // chassMutex.take();
 
