@@ -18,13 +18,13 @@ namespace Nova {
     //const float wheelDiameter = 3.25;
     //const int driveRPM = 450;
 
-    pros::Motor frontLeft(-1, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-    pros::Motor middleLeft(-2, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-    pros::Motor backLeft(3, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor frontLeft(-9, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor middleLeft(-16, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor backLeft(10, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
 
-    pros::Motor frontRight(11, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-    pros::Motor middleRight(12, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-    pros::Motor backRight(-13, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor frontRight(8, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor middleRight(17, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+    pros::Motor backRight(-11, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
 
     pros::MotorGroup leftDrive(
         {
@@ -53,22 +53,22 @@ namespace Nova {
         }
     );
 
-    pros::Motor intake(-8);
-    pros::adi::Pneumatics colorSort('B', false, false);
+    pros::Motor intake(12);
+    //pros::adi::Pneumatics colorSort('B', false, false);
     pros::Optical colorCheck(4);
     pros::adi::Pneumatics intakePiston('C', false, false);
 
     pros::adi::Pneumatics clamp('A', false, false);
-    pros::Distance clampCheck(15);
+    pros::Distance clampCheck(1);
 
-    pros::adi::Pneumatics doinker('D', false, false);
+    pros::adi::Pneumatics doinker('B', false, false);
 
-    pros::Motor lb(16);
-    pros::Rotation lbCheck(5);
+    pros::Motor lb(13);
+    pros::Rotation lbCheck(3);
 
     // Auton dependent
-    pros::Imu imu1(9);
-    pros::Imu imu2(10);
+    pros::Imu imu1(6);
+    pros::Imu imu2(7);
 
     pros::Rotation horizontalEncoder(20);
 } // namespace Nova

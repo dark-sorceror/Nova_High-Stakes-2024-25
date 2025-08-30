@@ -6,7 +6,7 @@
  * \date Updated - 2/10/2025
  */
 
-#include "pid.h"
+#include "modules/controllers/pid.h"
 
 Nova::PID::PID (
     float kP,

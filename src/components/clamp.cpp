@@ -37,9 +37,9 @@ void Nova::Clamp::run() {
         });
     }
 
-    if (clampCheck.get_distance() <= 50 && !clampToggle && !clampJustReleased) {
+    if (clampCheck.get_distance() <= 20 && !clampToggle && !clampJustReleased) {
         clampToggle = true;
-        pros::delay(500);
+        pros::delay(250);
         this -> clamp();
     }
 }

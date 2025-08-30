@@ -13,11 +13,16 @@
 
 #include "globals.h"
 #include "modules/pose.h"
-#include "modules/pid.h"
+#include "modules/controllers/pid.h"
 
 struct Point {
     float x;
     float y;
+};
+
+struct ChassVelocities {
+    double linear;
+    double angular;
 };
 
 namespace Nova {
@@ -77,7 +82,7 @@ namespace Nova {
              * 
              * @param dist 
              */
-            void translate(float dist);
+            void translate(float dist, int maxSpeed = 120);
 
             /**
              * @brief Rotate the Robot in 360 degree directions relative to itself

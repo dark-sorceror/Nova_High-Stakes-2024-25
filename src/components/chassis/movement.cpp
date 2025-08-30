@@ -69,15 +69,26 @@ double sign(double a)
  *
  * @param dist //inches
 */
-void Nova::Chassis::translate(float dist) {
-    Nova::PID chassisPID = Nova::PID(
-        4.5, // kp
-        0,  // ki
-        10, // kd increasing this will make more smooth
-        0, // max cumulative error inches
-        5,  // settle error inchjes
-        200 // settle time MILLIS
-    );
+ // 5, 0, 50, 0, 10, 200 - 21.5 inches for 24 inches
+    // 5.75, 0, 25, 0, 5, 200 - 12 for 12 inches
+
+    // 5.85, 0, 40, 0, 5, 200 - 90 degrees for 90 degrees
+    // 5.85, 0, 40, 0, 5, 200 - 45 degrees for 45 degrees
+    // 5.5, 0, 40, 0, 5, 200 - 180 degrees for 180 degrees // 5, 0, 50, 0, 10, 200 - 21.5 inches for 24 inches
+    // 5.75, 0, 25, 0, 5, 200 - 12 for 12 inches
+
+    // 5.85, 0, 40, 0, 5, 200 - 90 degrees for 90 degrees
+    // 5.85, 0, 40, 0, 5, 200 - 45 degrees for 45 degrees
+    // 5.5, 0, 40, 0, 5, 200 - 180 degrees for 180 degrees
+void Nova::Chassis::translate(float dist, int maxSpeed) {
+    Nova::PID chassisPID = Nova::PID(0,0,0,0,0,0);
+    if (fabsf(dist) >= 48) {
+        chassisPID = Nova::PID(5.2, 0, 50, 0, 8, 150); 
+    } else if (fabsf(dist) >= 24 && fabsf(dist) < 48) {
+        chassisPID = Nova::PID(5.6, 0, 50, 0, 6, 150); 
+    } else {
+        chassisPID = Nova::PID(5.5, 0, 25, 0, 5, 150);
+    }
     // 2pir * rpm  * 1m = distance
     // ticks / (300 / 2pir) = inches travelled
     this -> resetMotorEncoders();
@@ -86,7 +97,7 @@ void Nova::Chassis::translate(float dist) {
 
     float targetAngle = this -> getIMURotation();
 
-    float kIMU = 5;
+    float kIMU = 4;
     float angleError = 0.0;
     float imuCorrection = 0.0;
     float chassisPower = 0.0;
@@ -102,16 +113,16 @@ void Nova::Chassis::translate(float dist) {
 
         chassisPID.checkIfSettled(targetPosition - ticksToInches((Nova::backLeft.get_position() + Nova::backRight.get_position()) / 2));
 
-        chassisPower = chassisOutput > 120 ? 120 : (chassisOutput < -120 ? -120 : chassisOutput);
+        chassisPower = chassisOutput > maxSpeed ? maxSpeed : (chassisOutput < -maxSpeed ? -maxSpeed : chassisOutput);
 
         //ctr.print(0, 0, "%0.2f", this -> chassis.getIMURotation());
 
         if (dist > 0.0) {
-            Nova::leftDrive.move((chassisPower + imuCorrection) * 0.985);
-            Nova::rightDrive.move((chassisPower - imuCorrection) * 1.015);
+            Nova::leftDrive.move((chassisPower + imuCorrection));
+            Nova::rightDrive.move((chassisPower - imuCorrection));
         } else {
-            Nova::leftDrive.move((chassisPower + imuCorrection) * 0.935);
-            Nova::rightDrive.move((chassisPower - imuCorrection) * 0.935);
+            Nova::leftDrive.move((chassisPower + imuCorrection));
+            Nova::rightDrive.move((chassisPower - imuCorrection));
         }
 
         pros::delay(10);
@@ -124,15 +135,22 @@ void Nova::Chassis::translate(float dist) {
     // Nova::ctr.print(0, 0, "%0.2f", chassis.getIMURotation());
 }
 
+
+    // 5.85, 0, 40, 0, 5, 200 - 90 degrees for 90 degrees
+    // 5.85, 0, 40, 0, 5, 200 - 45 degrees for 45 degrees
+    // 5.5, 0, 40, 0, 5, 200 - 180 degrees for 180 degrees
+
 void Nova::Chassis::rotate(float angle) {
-    Nova::PID turnPID = Nova::PID(
-        4,  // kp
-        0,  // ki
-        50, // kd
-        0, // max cumulative error inches
-        5,  // settle error inchjes
-        200 // settle time MILLIS
-    );
+    Nova::PID turnPID = Nova::PID(0,0,0,0,0,0);
+    if (fabsf(angle) >= 180) {
+        turnPID = Nova::PID(1.4, 0, 7, 0, 8, 150);
+    } else if (fabsf(angle) >= 90 && fabs(angle) < 180) {
+        turnPID = Nova::PID(1.45, 0, 7, 0, 8, 150);
+    } else if (fabs(angle) >= 45 && fabsf(angle) < 90) {
+        turnPID = Nova::PID(1.5, 0, 7, 0, 5, 150);
+    } else {
+        turnPID = Nova::PID(1.5, 0, 2, 0, 5, 150);
+    }
 
     float targetPosition = this -> getIMURotation() + angle;
 

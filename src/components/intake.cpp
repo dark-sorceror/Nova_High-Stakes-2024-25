@@ -42,15 +42,8 @@ void Nova::Intake::lowerIntake() {
 void Nova::Intake::run() {         
     // RED ALLIANCE: colorCheck.get_hue() > 130 && colorCheck.get_hue() < 210 && colorCheck.get_proximity() > 240
     // BLUE ALLIANCE: colorCheck.get_hue() > 5 && colorCheck.get_hue() < 40 && colorCheck.get_proximity() > 240
-    if (colorCheck.get_hue() > 5 && colorCheck.get_hue() < 40 && colorCheck.get_proximity() > 240) {
-        pros::Task colorSortLogic([] {
-            Nova::colorSort.set_value(1);
-            pros::delay(500);
-            Nova::colorSort.set_value(0);
-        });
-    }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-    if (ctr.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) Nova::intake.move(92);
-    else if (ctr.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) Nova::intake.move(-92);
+    if (ctr.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) Nova::intake.move(107);
+    else if (ctr.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) Nova::intake.move(-107);
     else Nova::intake.brake();
 }
