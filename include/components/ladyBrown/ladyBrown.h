@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for ladyBrown.cpp
  * 
- * \date Updated - 8/30/2025
+ * \date Updated - 9/1/2025
  */
 
 #ifndef _LADYBROWN_H_
@@ -21,15 +21,11 @@ namespace Nova {
     class LadyBrown {
         public:
             void initialize();
-            void startControl();
-            void calibrate();
 
             void goToPosition(float position);
 
             void next();
             void prev();
-            void toggle();
-            void score();
 
             void setState(LadyBrownState newState);
             void setTarget(LadyBrownState state);

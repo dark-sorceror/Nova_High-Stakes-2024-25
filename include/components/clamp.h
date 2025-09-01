@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for clamp.cpp
  * 
- * \date Updated - 2/10/2025
+ * \date Updated - 9/1/2025
  */ 
 
 #ifndef _CLAMP_H_
@@ -16,6 +16,7 @@ namespace Nova {
         public:
             void clamp();
             void unclamp();
+
             void run();
     };
 } // namespace Nova

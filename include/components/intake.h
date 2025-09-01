@@ -3,7 +3,7 @@
  *
  * \brief Contains definitions for intake.cpp
  * 
- * \date Updated - 2/10/2025
+ * \date Updated - 9/1/2025
  */
 
 #ifndef _INTAKE_H_
@@ -15,10 +15,13 @@ namespace Nova {
     class Intake {
         public:
             void initialize();
+
             void start(int voltage);
             void stop();
+
             void raiseIntake();
             void lowerIntake();
+
             void run();
     };
 } // namespace Nova

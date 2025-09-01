@@ -41,15 +41,22 @@ void Nova::LadyBrown::initialize() {
 }
 
 Nova::LadyBrownState Nova::State::getLadyBrownState()  {
-    mutex.take();
-    auto returnVal = ladyBrownState;
-    mutex.give();
-    return returnVal; 
+    if (mutex.take(10)) { // So don't have to call again
+        auto returnVal = ladyBrownState;
+
+        mutex.give();
+
+        return returnVal;
+    }
+
+    return LadyBrownState::close;
 }
 
 void Nova::State::setLadyBrownState(Nova::LadyBrownState state) {
     mutex.take();
+
     ladyBrownState = state;
+
     mutex.give();
 }
 
@@ -58,8 +65,11 @@ void Nova::LadyBrown::goToPosition(float position) {
 }
 
 void Nova::LadyBrown::setState(Nova::LadyBrownState state) {
+    // Local State
     currentState = state;
     setTarget(currentState);
+
+    // Global State
     auto s = Nova::State::getInstance();
     s -> setLadyBrownState(currentState);
 }
@@ -113,6 +123,7 @@ void nextWallStakeState() {
 void Nova::LadyBrown::run() {
     if (Nova::ctr.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)) {
         manual = false;
+        
         next();
     }
     

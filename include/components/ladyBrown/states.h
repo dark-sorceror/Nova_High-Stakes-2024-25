@@ -3,7 +3,7 @@
  *
  * \brief Contains ladybrown states
  * 
- * \date Updated - 3/10/2025
+ * \date Updated - 8/31/2025
  */ 
 
 #ifndef _STATES_H_
@@ -26,6 +26,7 @@ namespace Nova {
     class State {
         public:
             static State* instance;
+
             static State* getInstance() {
                 if (instance == nullptr) {
                     instance = new State();
@@ -35,13 +36,16 @@ namespace Nova {
             }
 
             LadyBrownState getLadyBrownState();
+
             void setLadyBrownState(LadyBrownState state);
 
         private:
             pros::Mutex mutex;
+
             State() = default;
+
             LadyBrownState ladyBrownState = LadyBrownState::close;
-        };
+    };
 } // namespace Nova
 
 #endif // _STATES_H_

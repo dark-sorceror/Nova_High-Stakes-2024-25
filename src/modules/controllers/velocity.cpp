@@ -14,6 +14,7 @@ void Nova::VelocityController::setVelocity(double v) { target = v; }
 double Nova::VelocityController::getVoltage(double curr, double dt) {
     double filtered = ema.filter(curr);
     double error = target - filtered;
+
     return pid.compute(error, dt);
 }
 
@@ -29,15 +30,20 @@ ChassVelocities Nova::VelocityManager::update(std::pair<double, double> vals, do
         double maxChange = (*slew) * dt;
 
         double linDiff = vl - prev.linear;
-        if (std::abs(linDiff) > maxChange)
+
+        if (std::abs(linDiff) > maxChange) {
             vl = prev.linear + maxChange * (linDiff > 0 ? 1 : -1);
+        }
 
         double angDiff = va - prev.angular;
-        if (std::abs(angDiff) > maxChange)
+
+        if (std::abs(angDiff) > maxChange) {
             va = prev.angular + maxChange * (angDiff > 0 ? 1 : -1);
+        }
     }
 
     prev = {vl, va};
+    
     return prev;
 }
 
